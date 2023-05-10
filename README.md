@@ -1,7 +1,7 @@
 # Notable
 by Phil Mass
 
-A notes app deployed [here]()
+A notes app deployed [here](https://philrmass.github.io/notable/)
 
 ## To build
 ```
