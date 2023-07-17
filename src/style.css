@@ -1,8 +1,5 @@
 html, body {
-	font: 14px/1.21 'Helvetica Neue', arial, sans-serif;
-	font-weight: 400;
-}
-
-h1 {
-	text-align: center;
+  font-family: 'Helvetica Neue', arial, sans-serif;
+  padding: 0;
+  margin: 0;
 }
