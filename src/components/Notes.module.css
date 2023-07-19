@@ -19,11 +19,6 @@
   border: 1px solid blue;
 }
 
-.note {
-  border: 1px solid orange;
-  height: 50px;
-}
-
 .footer {
   flex-shrink: 0;
   display: flex;

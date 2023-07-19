@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "notable",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider preact build",
@@ -29,6 +29,8 @@
     "preact": "^10.1.0",
     "preact-render-to-string": "^5.1.2",
     "preact-router": "^4.1.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-touch-backend": "^16.0.1",
     "utilities": "https://github.com/philrmass/utilities#v0.7.0",
     "uuid": "^9.0.0"
   }
