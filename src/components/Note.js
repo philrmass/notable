@@ -1,13 +1,9 @@
 import { Link } from 'preact-router';
 import { useDrag, useDrop } from 'react-dnd';
+import classnames from 'classnames';
 import styles from './Note.module.css';
 
-function moveNote(itemId, id) {
-  console.log('move', itemId.slice(-4), id.slice(-4));
-}
-
-export default function Note({ id, text }) {
-  const parentId = 'hello';
+export default function Note({ id, text, moveNote }) {
   const type = 'Note';
   const color = '#ff0000';
 
@@ -28,12 +24,17 @@ export default function Note({ id, text }) {
     },
   });
 
+  const classes = classnames(
+    styles.note,
+    { [styles.hidden]: isDragging },
+  );
+
   return (
-    <div ref={drop} className={styles.note}>
+    <div ref={drop} className={classes}>
       <Link key={id} href={`/notes/${id}/edit`}>
         { `(${id.slice(-4)}) ${text}` }
       </Link>
-      <div ref={drag} className={styles.drag}>
+      <div ref={drag} className={styles.handle}>
         DRAG
       </div>
     </div>

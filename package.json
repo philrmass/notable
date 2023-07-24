@@ -1,10 +1,10 @@
 {
   "private": true,
   "name": "notable",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider preact build",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider preact build --no-prerender",
     "deploy": "gh-pages -d build",
     "dev": "DEV=true cross-env NODE_OPTIONS=--openssl-legacy-provider preact watch --clear=false",
     "eslint": "eslint 'src/**'",
@@ -23,6 +23,7 @@
     "stylelint-config-standard": "^33.0.0"
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "gh-pages": "^5.0.0",
     "history": "^5.3.0",
     "jest": "^29.5.0",
@@ -31,7 +32,7 @@
     "preact-router": "^4.1.0",
     "react-dnd": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
-    "utilities": "https://github.com/philrmass/utilities#v0.7.0",
+    "utilities": "https://github.com/philrmass/utilities#v0.8.1",
     "uuid": "^9.0.0"
   }
 }

@@ -5,6 +5,10 @@
   justify-content: space-between;
 }
 
-.drag {
+.handle {
   background: #888;
+}
+
+.hidden {
+  visibility: hidden;
 }
