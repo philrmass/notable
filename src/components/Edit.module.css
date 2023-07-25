@@ -1,3 +1,33 @@
 .main {
   background: '#f0f0ff'
 }
+
+/*
+.text {
+  height: var(--noteHeight);
+  flex-grow: 1;
+  padding: var(--size-8);
+  user-select: none;
+  white-space: pre-wrap;
+  overflow: hidden;
+  transform: scale(1);
+}
+
+.textarea {
+  height: var(--noteHeight);
+  flex-grow: 1;
+  padding: var(--size-8);
+  border: 0;
+  background: transparent;
+  font-family: var(--fontFamily);
+  font-size: 1em;
+  overflow-y: scroll;
+  resize: none;
+}
+
+.opening {
+  transition: all 100ms;
+  transform: scale(1.2);
+  color: transparent;
+}
+*/

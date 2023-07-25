@@ -1,14 +1,4 @@
-.note {
-  border: 1px solid orange;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.handle {
-  background: #888;
-}
-
-.hidden {
-  visibility: hidden;
+.link {
+  height: 100%;
+  padding: var(--text-padding);
 }

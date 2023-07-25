@@ -14,6 +14,14 @@ const defaultNotes = {
   },
 };
 
+// ??? edit ui, move up with keyboard, show colors
+// ??? click link: edit or open if children
+// ??? add child count on note
+// ??? note menu: <dialog> move to top, edit, remove, add children, move up a level
+// ??? click on parent note to move up
+// ??? bottom button to go up a level
+// ??? add export
+// ??? add import
 export default function Home() {
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', 'root');
@@ -49,6 +57,7 @@ export default function Home() {
         ...notes,
         [note.id]: {
           ...note,
+          parentId: pid,
         },
         [pid]: {
           ...parent,
