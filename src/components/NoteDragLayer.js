@@ -38,7 +38,7 @@ export default function NoteDragLayer() {
         <div>3</div>
       </div>
       <div className={textClasses}>
-        { `(${item.id.slice(-4)}) ${item.text}` }
+        { item.text }
       </div>
       <div className="handle">
         <Handle />

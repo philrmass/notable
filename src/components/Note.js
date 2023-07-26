@@ -36,7 +36,7 @@ export default function Note({ id, text, moveNote }) {
       <div className="text">
         <Link key={id} href={`/notes/${id}/edit`}>
           <div className={styles.link}>
-            { `(${id.slice(-4)}) ${text}` }
+            { text }
           </div>
         </Link>
       </div>
