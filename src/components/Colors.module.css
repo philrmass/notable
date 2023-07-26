@@ -1,0 +1,17 @@
+.colors {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--pad0);
+  padding: var(--pad0);
+}
+
+.color {
+  border: 0;
+  border-radius: 4px;
+}
+
+.selected {
+  border: 2px solid var(--white);
+}

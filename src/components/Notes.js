@@ -13,7 +13,6 @@ export default function Notes({ id, notes, addNote, moveNote }) {
 
   return (
     <div className={styles.main}>
-      <div>{`NOTE ${id} [${note.children.length}]`}</div>
       { note.text && (
         <div className={styles.parent}>
           <div>{note.text}</div>

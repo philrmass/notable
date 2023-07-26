@@ -14,14 +14,18 @@ const defaultNotes = {
   },
 };
 
-// ??? edit ui, move up with keyboard, show colors
-// ??? click link: edit or open if children
+// ??? edit ui, move up with keyboard
+// ??? colors
+// ??? click note: edit or open if children
+// ??? note menu (dialog): delete (+ X children), move down a level, move up a level, move to first, edit children, edit
 // ??? add child count on note
-// ??? note menu: <dialog> move to top, edit, remove, add children, move up a level
-// ??? click on parent note to move up
 // ??? bottom button to go up a level
+// ??? disabled buttons - save
+// ??? add font
 // ??? add export
 // ??? add import
+// ??? save and restore scroll y by parentId
+// ??? color hcl editor
 export default function Home() {
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', 'root');

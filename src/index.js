@@ -7,7 +7,7 @@ import './style';
 export default function App() {
   return (
     <DndProvider backend={TouchBackend}>
-      <Home />;
+      <Home />
       <NoteDragLayer />
     </DndProvider>
   );

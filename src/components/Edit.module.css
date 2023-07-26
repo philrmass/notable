@@ -1,33 +1,36 @@
 .main {
-  background: '#f0f0ff'
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--grey);
 }
 
-/*
+.spacer {
+  flex-grow: 1;
+}
+
+.colors {
+  height: calc(2 * var(--note-height));
+}
+
 .text {
-  height: var(--noteHeight);
-  flex-grow: 1;
-  padding: var(--size-8);
-  user-select: none;
-  white-space: pre-wrap;
-  overflow: hidden;
-  transform: scale(1);
-}
-
-.textarea {
-  height: var(--noteHeight);
-  flex-grow: 1;
-  padding: var(--size-8);
+  flex-shrink: 0;
   border: 0;
   background: transparent;
-  font-family: var(--fontFamily);
-  font-size: 1em;
-  overflow-y: scroll;
+  padding: var(--text-padding);
+  font-family: inherit;
+  font-size: inherit;
   resize: none;
+  user-select: none;
 }
 
-.opening {
-  transition: all 100ms;
-  transform: scale(1.2);
-  color: transparent;
+.buttons {
+  display: flex;
+  gap: var(--pad0);
+  padding: var(--pad0);
 }
-*/
+
+.buttons button {
+  flex-grow: 1;
+}

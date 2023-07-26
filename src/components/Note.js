@@ -4,9 +4,8 @@ import classnames from 'classnames';
 import Handle from './Handle';
 import styles from './Note.module.css';
 
-export default function Note({ id, text, moveNote }) {
+export default function Note({ id, color, text, moveNote }) {
   const type = 'Note';
-  const color = '#ff0000';
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type,
@@ -25,10 +24,15 @@ export default function Note({ id, text, moveNote }) {
     },
   });
 
-  const noteClasses = classnames('note', { hidden: isDragging });
+  const noteStyles = { background: color };
+  const noteClasses = classnames('note', { [styles.hidden]: isDragging });
 
   return (
-    <div ref={drop} className={noteClasses}>
+    <div
+      ref={drop}
+      style={noteStyles}
+      className={noteClasses}
+    >
       <div className="controls">
         <button>M</button>
         <div>3</div>

@@ -13,15 +13,10 @@ export default function NoteDragLayer() {
     }),
   );
 
-  // ??? restore drag background
-  // const background = item.color ?? '#ffffff';
-  const left = `${diff?.x ?? 0}px`;
-  const top = `${current?.y ?? 0}px`;
-
   const noteStyle = {
-    //background,
-    left,
-    top,
+    background: item?.color,
+    left: `${diff?.x ?? 0}px`,
+    top: `${current?.y ?? 0}px`,
   };
 
   if (!isDragging) {
