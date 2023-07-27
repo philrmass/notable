@@ -8,7 +8,7 @@
 }
 
 .top {
-  flex-grow: 2;
+  flex-grow: 1;
 }
 
 .bottom {
@@ -17,7 +17,7 @@
 
 .colors {
   height: calc(2 * var(--note-height));
-  margin-bottom: var(--gap2);
+  margin: var(--gap2) 0;
 }
 
 .text {
@@ -34,7 +34,7 @@
 .buttons {
   display: flex;
   gap: var(--gap0);
-  margin-top: var(--gap2);
+  margin: var(--gap2) 0;
 }
 
 .buttons button {
