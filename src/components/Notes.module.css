@@ -16,15 +16,19 @@
 }
 
 .notes {
-  padding: var(--gap1) var(--note-gap);
+  padding: var(--note-gap);
 }
 
 .footer {
   flex-shrink: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: var(--gap1) var(--gap2);
   background: var(--footer);
+  box-shadow:
+    0 -2px 5px 0 rgb(0 0 0 / 12%),
+    0 -3px 10px 0 rgb(0 0 0 / 16%);
 }
 
 .footer a {

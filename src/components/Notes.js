@@ -3,7 +3,15 @@ import Note from './Note';
 import { version } from '../../package.json';
 import styles from './Notes.module.css';
 
-export default function Notes({ id, notes, addNote, moveNote }) {
+export default function Notes({
+  id,
+  notes,
+  addNote,
+  deleteNote,
+  goUp,
+  moveNote,
+  openMenu,
+}) {
   const note = notes[id];
   const children = note.children.map((id) => notes[id]);
 
@@ -24,13 +32,18 @@ export default function Notes({ id, notes, addNote, moveNote }) {
             <Note
               key={child.id}
               {...child}
+              deleteNote={deleteNote} 
               moveNote={moveNote}
+              openMenu={openMenu} 
             />
           )) }
         </div>
       </div>
       <div className={styles.footer}>
-        <button onClick={() => addNote(id)}>
+        <button
+          className="icon-button"
+          onClick={() => addNote(id)}
+        >
           +
         </button>
         <Link href="/notes/root">
@@ -39,7 +52,12 @@ export default function Notes({ id, notes, addNote, moveNote }) {
             {`v${version}`}
           </span>
         </Link>
-        <button>^</button>
+        <button
+          className="icon-button"
+          onClick={() => goUp()}
+        >
+          ^
+        </button>
       </div>
     </div>
   );

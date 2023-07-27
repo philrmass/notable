@@ -29,8 +29,8 @@ export default function NoteDragLayer() {
   return (
     <div className={noteClasses} style={noteStyle}>
       <div className="controls">
-        <button>M</button>
-        <div>3</div>
+        <button className="icon-button">M</button>
+        <button className="icon-button">D</button>
       </div>
       <div className={textClasses}>
         { item.text }

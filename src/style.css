@@ -65,3 +65,25 @@ html, body {
   background: var(--button-disabled);
   color: var(--button-disabled-text);
 }
+
+.icon-button {
+  --size: 30px;
+
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--button);
+  color: var(--button-text);
+}
+
+.controls .icon-button {
+  --size: 22px;
+
+  width: var(--size);
+  height: var(--size);
+  background: var(--overlay2);
+}

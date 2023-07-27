@@ -4,7 +4,14 @@ import classnames from 'classnames';
 import Handle from './Handle';
 import styles from './Note.module.css';
 
-export default function Note({ id, color, text, moveNote }) {
+export default function Note({
+  id,
+  color,
+  text,
+  deleteNote,
+  moveNote,
+  openMenu,
+}) {
   const type = 'Note';
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -34,8 +41,18 @@ export default function Note({ id, color, text, moveNote }) {
       className={noteClasses}
     >
       <div className="controls">
-        <button>M</button>
-        <div>3</div>
+        <button
+          className="icon-button"
+          onClick={() => openMenu(id)}
+        >
+          M
+        </button>
+        <button
+          className="icon-button"
+          onClick={() => deleteNote(id)}
+        >
+          D
+        </button>
       </div>
       <div className="text">
         <Link key={id} href={`/notes/${id}/edit`}>
