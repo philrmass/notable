@@ -19,7 +19,7 @@ export default function Notes({ id, notes, addNote, moveNote }) {
         </div>
       )}
       <div className={styles.content}>
-        <div>
+        <div className={styles.notes}>
           { children.map((child) => (
             <Note
               key={child.id}

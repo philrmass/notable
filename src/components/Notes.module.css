@@ -12,6 +12,11 @@
 
 .content {
   flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.notes {
+  padding: var(--gap1) var(--note-gap);
 }
 
 .footer {

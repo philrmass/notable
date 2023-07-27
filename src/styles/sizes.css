@@ -4,9 +4,11 @@
   --gap2: 16px;
 
   /* usage */
-  --radius1: 4px;
   --dot: 5px;
   --handle-width: calc((4 / 6) * var(--note-height));
+  --note-gap: 2px;
   --note-height: calc(3 * var(--line-height) + 2 * var(--gap1));
+  --radius0: 2px;
+  --radius1: 4px;
   --text-padding: var(--gap1) var(--gap2);
 }

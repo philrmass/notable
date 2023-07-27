@@ -18,11 +18,12 @@ html, body {
 
 .note {
   display: flex;
+  border-radius: var(--radius0);
   background: white;
 }
 
 .note + .note {
-  margin-top: 2px;
+  margin-top:  var(--note-gap);
 }
 
 .controls {
