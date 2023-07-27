@@ -92,8 +92,9 @@ export default function Edit({
           Cancel
         </button>
       </div>
-      <div>{ keyboard ? 'keyboard' : 'no keyboard' }</div>
-      <div className={styles.bottom} />
+      { !keyboard && (
+        <div className={styles.bottom} />
+      ) }
     </div>
   );
 }
