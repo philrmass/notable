@@ -6,10 +6,10 @@ const colors = [
   'lch(80 50 45)',
   'lch(80 50 90)',
   'lch(80 50 135)',
-  'lch(80 50 180)',
-  'lch(80 50 225)',
-  'lch(80 50 270)',
   'lch(80 50 315)',
+  'lch(80 50 270)',
+  'lch(80 50 225)',
+  'lch(80 50 180)',
 ];
 
 export default function Colors({

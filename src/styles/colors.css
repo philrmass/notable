@@ -1,0 +1,22 @@
+:root {
+  --black: #1e2024;
+  --dark: #00000040;
+  --darker: #00000080;
+  --grey: #6b6d71;
+  --grey-lt: #c0c2c7;
+  --white: #fcfcfc;
+  --yellow: #ffff02;
+
+  /* usage */
+  --bg: var(--grey);
+  --button: var(--white);
+  --button-disabled: var(--grey-lt);
+  --button-disabled-text: var(--grey);
+  --button-text: var(--black);
+  --footer: var(--grey-lt);
+  --highlight: var(--white);
+  --overlay1: var(--dark);
+  --overlay2: var(--darker);
+  --text: var(--black);
+  --text-lt: var(--grey);
+}

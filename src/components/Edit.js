@@ -57,7 +57,7 @@ export default function Edit({
 
   return (
     <div className={styles.main}>
-      <div className={styles.spacer} />
+      <div className={styles.top} />
       <div className={styles.colors}>
         <Colors
           color={note.color}
@@ -89,6 +89,7 @@ export default function Edit({
           Cancel
         </button>
       </div>
+      <div className={styles.bottom} />
     </div>
   );
 }

@@ -1,11 +1,11 @@
 .handle {
-  padding: var(--pad0);
+  padding: var(--gap0);
   width: var(--handle-width);
   height: var(--note-height);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
-  background: var(--dark);
+  background: var(--overlay1);
 }
 
 .box {
@@ -18,5 +18,5 @@
   width: var(--dot);
   height: var(--dot);
   border-radius: 50%;
-  background: var(--darker);
+  background: var(--overlay2);
 }

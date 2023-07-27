@@ -30,16 +30,16 @@ export default function Notes({ id, notes, addNote, moveNote }) {
         </div>
       </div>
       <div className={styles.footer}>
-        <button>^</button>
+        <button onClick={() => addNote(id)}>
+          +
+        </button>
         <Link href="/notes/root">
           Notable
           <span className={styles.version}>
             {`v${version}`}
           </span>
         </Link>
-        <button onClick={() => addNote(id)}>
-          +
-        </button>
+        <button>^</button>
       </div>
     </div>
   );

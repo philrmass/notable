@@ -1,0 +1,12 @@
+:root {
+  --gap0: 4px;
+  --gap1: 8px;
+  --gap2: 16px;
+
+  /* usage */
+  --radius1: 4px;
+  --dot: 5px;
+  --handle-width: calc((4 / 6) * var(--note-height));
+  --note-height: calc(3 * var(--line-height) + 2 * var(--gap1));
+  --text-padding: var(--gap1) var(--gap2);
+}

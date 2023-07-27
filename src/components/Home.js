@@ -14,10 +14,11 @@ const defaultNotes = {
   },
 };
 
-// ??? edit ui, move up with keyboard
-// ??? colors
-// ??? click note: edit or open if children
+// ??? space and colors in edit menu, buttons
+// ??? pick initial colors
 // ??? note menu (dialog): delete (+ X children), move down a level, move up a level, move to first, edit children, edit
+// ??? click note: edit or open if children
+// ??? parent note stays at the top
 // ??? add child count on note
 // ??? bottom button to go up a level
 // ??? disabled buttons - save

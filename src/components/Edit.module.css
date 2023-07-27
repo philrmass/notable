@@ -3,15 +3,21 @@
   inset: 0;
   display: flex;
   flex-direction: column;
+  padding: var(--gap0);
   background: var(--grey);
 }
 
-.spacer {
+.top {
+  flex-grow: 2;
+}
+
+.bottom {
   flex-grow: 1;
 }
 
 .colors {
   height: calc(2 * var(--note-height));
+  margin-bottom: var(--gap2);
 }
 
 .text {
@@ -27,8 +33,8 @@
 
 .buttons {
   display: flex;
-  gap: var(--pad0);
-  padding: var(--pad0);
+  gap: var(--gap0);
+  margin-top: var(--gap2);
 }
 
 .buttons button {
