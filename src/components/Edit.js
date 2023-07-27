@@ -22,6 +22,7 @@ export default function Edit({
   saveNote,
 }) {
   const [note, setNote] = useState(notes[id] ?? {});
+  const [keyboard, setKeyboard] = useState(false);
   const isComplete = Boolean(note.text);
 
   useEffect(() => {
@@ -71,6 +72,8 @@ export default function Edit({
           className={textClasses}
           value={note.text}
           onInput={(e) => handleTextChange(e.target.value)}
+          onBlur={() => setKeyboard(false)}
+          onFocus={() => setKeyboard(true)}
         />
         <Handle />
       </div>
@@ -89,6 +92,7 @@ export default function Edit({
           Cancel
         </button>
       </div>
+      <div>{ keyboard ? 'keyboard' : 'no keyboard' }</div>
       <div className={styles.bottom} />
     </div>
   );
