@@ -20,45 +20,47 @@ export default function Notes({
   }
 
   return (
-    <div className={styles.main}>
-      { note.text && (
-        <div className={styles.parent}>
-          <div>{note.text}</div>
+    <>
+      <div className={styles.main}>
+        { note.text && (
+          <div className={styles.parent}>
+            <div>{note.text}</div>
+          </div>
+        )}
+        <div className={styles.content}>
+          <div className={styles.notes}>
+            { children.map((child) => (
+              <Note
+                key={child.id}
+                {...child}
+                deleteNote={deleteNote} 
+                moveNote={moveNote}
+                openMenu={openMenu} 
+              />
+            )) }
+          </div>
         </div>
-      )}
-      <div className={styles.content}>
-        <div className={styles.notes}>
-          { children.map((child) => (
-            <Note
-              key={child.id}
-              {...child}
-              deleteNote={deleteNote} 
-              moveNote={moveNote}
-              openMenu={openMenu} 
-            />
-          )) }
+        <div className={styles.footer}>
+          <button
+            className="icon-button"
+            onClick={() => addNote(id)}
+          >
+            +
+          </button>
+          <Link href="/notes/root">
+            Notable
+            <span className={styles.version}>
+              {`v${version}`}
+            </span>
+          </Link>
+          <button
+            className="icon-button"
+            onClick={() => goUp()}
+          >
+            ^
+          </button>
         </div>
       </div>
-      <div className={styles.footer}>
-        <button
-          className="icon-button"
-          onClick={() => addNote(id)}
-        >
-          +
-        </button>
-        <Link href="/notes/root">
-          Notable
-          <span className={styles.version}>
-            {`v${version}`}
-          </span>
-        </Link>
-        <button
-          className="icon-button"
-          onClick={() => goUp()}
-        >
-          ^
-        </button>
-      </div>
-    </div>
+    </>
   );
 }

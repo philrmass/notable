@@ -1,9 +1,11 @@
+import { useState } from 'preact/hooks';
 import { Router, route } from 'preact-router';
 import { createHashHistory } from 'history';
 import { v4 as uuidv4 } from 'uuid';
 import { move } from 'utilities/array';
 import { useLocalStorage } from 'utilities/hooks';
 import Edit from './Edit';
+import Menu from './Menu';
 import Notes from './Notes';
 import Redirect from './Redirect';
 
@@ -14,9 +16,9 @@ const defaultNotes = {
   },
 };
 
-// ??? add menu from dialog
-// ??? add actions file
+// ??? switch to menu id
 // ??? menu options: delete note & X children, move down a level, move up a level, move to first, edit children, edit
+// ??? add actions file
 // ??? click note: edit or open if children
 // ??? parent note stays at the top
 // ??? add child count on bottom-right
@@ -29,6 +31,7 @@ const defaultNotes = {
 export default function Home() {
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', 'root');
+  const [menuShown, setMenuShown] = useState(false);
 
   const addNote = (pid) => {
     const id = uuidv4();
@@ -83,6 +86,7 @@ export default function Home() {
   const openMenu = () => {
     // ??? implement
     console.log('MENU');
+    setMenuShown(true);
   };
 
   const saveNote = (note, pid) => {
@@ -106,23 +110,29 @@ export default function Home() {
   };
 
   return (
-    <Router history={createHashHistory()}>
-      <Edit
-        path="/notes/:id/edit"
-        notes={notes}
-        parentId={parentId}
-        saveNote={(n, pid) => saveNote(n, pid)}
+    <>
+      <Router history={createHashHistory()}>
+        <Edit
+          path="/notes/:id/edit"
+          notes={notes}
+          parentId={parentId}
+          saveNote={(n, pid) => saveNote(n, pid)}
+        />
+        <Notes
+          path="/notes/:id"
+          notes={notes}
+          addNote={addNote}
+          deleteNote={deleteNote} 
+          goUp={goUp}
+          moveNote={moveNote}
+          openMenu={() => setMenuShown(true)} 
+        />
+        <Redirect default to="/notes/root" />
+      </Router>
+      <Menu
+        shown={menuShown}
+        onClose={() => setMenuShown(false)}
       />
-      <Notes
-        path="/notes/:id"
-        notes={notes}
-        addNote={addNote}
-        deleteNote={deleteNote} 
-        goUp={goUp}
-        moveNote={moveNote}
-        openMenu={openMenu} 
-      />
-      <Redirect default to="/notes/root" />
-    </Router>
+    </>
   );
 }
