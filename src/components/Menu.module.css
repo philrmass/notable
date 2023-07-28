@@ -1,3 +1,14 @@
 .menu {
   white-space: pre-wrap;
 }
+
+.menu button {
+  display: block;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+}
+
+.menu button + button {
+  margin-top: var(--gap2);
+}

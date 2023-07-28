@@ -16,12 +16,16 @@ const defaultNotes = {
   },
 };
 
-// ??? switch to menu id
-// ??? menu options: delete note & X children, move down a level, move up a level, move to first, edit children, edit
-// ??? add actions file
+// ??? parent fixed at top, highlighted
 // ??? click note: edit or open if children
-// ??? parent note stays at the top
+// ??? fix init color
+// ??? implement move up
+// ??? implement all other actions
+// ??? add actions file
 // ??? add child count on bottom-right
+// ??? add icons (plus, up, menu/dots)
+// ??? confirm if deleting note with children
+// ??? add move down children names modal
 // ??? add font, PT Sans
 // ??? add export
 // ??? add import
@@ -29,9 +33,11 @@ const defaultNotes = {
 // ??? pick initial colors
 // ??? color hcl editor
 export default function Home() {
+  const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
-  const [parentId, setParentId] = useLocalStorage('nParentId', 'root');
-  const [menuShown, setMenuShown] = useState(false);
+  const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
+  const [menuId, setMenuId] = useState(null);
+  const hasParent = parentId !== rootName;
 
   const addNote = (pid) => {
     const id = uuidv4();
@@ -64,8 +70,18 @@ export default function Home() {
   };
 
   const goUp = () => {
-    // ??? implement, if parentId
+    // ??? implement, if hasParent
     console.log('UP');
+  };
+
+  const moveDown = (id) => {
+    // ??? implement
+    console.log('MOVE-DOWN', id, 'pick child next');
+  };
+
+  const moveFirst = (id) => {
+    // ??? implement
+    console.log('MOVE-FIRST', id);
   };
 
   const moveNote = (id, toId) => {
@@ -83,10 +99,9 @@ export default function Home() {
     }));
   };
 
-  const openMenu = () => {
-    // ??? implement
-    console.log('MENU');
-    setMenuShown(true);
+  const moveUp = (id) => {
+    // ??? implement, if hasParent
+    console.log('MOVE-DOWN', id, 'pick child next');
   };
 
   const saveNote = (note, pid) => {
@@ -125,13 +140,19 @@ export default function Home() {
           deleteNote={deleteNote} 
           goUp={goUp}
           moveNote={moveNote}
-          openMenu={() => setMenuShown(true)} 
+          openMenu={(id) => setMenuId(id)} 
         />
         <Redirect default to="/notes/root" />
       </Router>
       <Menu
-        shown={menuShown}
-        onClose={() => setMenuShown(false)}
+        id={menuId}
+        hasParent={hasParent}
+        deleteNote={deleteNote}
+        goTo={(path) => route(path)}
+        moveDown={moveDown}
+        moveFirst={moveFirst}
+        moveUp={moveUp}
+        onClose={() => setMenuId(null)}
       />
     </>
   );

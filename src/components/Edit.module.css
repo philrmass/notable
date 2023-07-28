@@ -31,6 +31,10 @@
   user-select: none;
 }
 
+.text:focus {
+  outline-color: var(--highlight);
+}
+
 .buttons {
   display: flex;
   gap: var(--gap0);
