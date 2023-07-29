@@ -1,24 +1,45 @@
 :root {
+  /* ui colors */
+  --white: #fcfcfc;
+  --grey3: #c0c2c7;
+  --grey2: #8b8d91;
+  --grey1: #6b6d71;
+  --grey0: #4b4d51;
   --black: #1e2024;
   --lighter: #ffffff40;
-  --dark: #00000028;
   --darker: #00000040;
-  --grey: #6b6d71;
-  --grey-lt: #c0c2c7;
-  --white: #fcfcfc;
-  --yellow: #ffff02;
+
+  /* note colors */
+  --blue: lch(80 50 270deg);
+  --brown: lch(73 20 30deg);
+  --green: lch(80 50 135deg);
+  --grey: lch(77 10 270deg);
+  --orange: lch(80 50 45deg);
+  --purple: lch(80 50 315deg);
+  --red: lch(80 50 0deg);
+  --yellow: lch(80 50 90deg);
 
   /* usage */
-  --bg: var(--grey);
+  --bg: var(--grey1);
   --button: var(--white);
-  --button-disabled: var(--grey-lt);
-  --button-disabled-text: var(--grey);
+  --button-disabled: var(--grey3);
+  --button-disabled-text: var(--grey1);
   --button-text: var(--black);
-  --footer: var(--grey-lt);
+  --note0: var(--red);
+  --note1: var(--orange);
+  --note2: var(--yellow);
+  --note3: var(--green);
+  --note4: var(--blue);
+  --note5: var(--purple);
+  --note6: var(--brown);
+  --note7: var(--grey);
+  --note-default: var(--blue);
+  --count: var(--lighter);
+  --count-text: var(--grey0);
+  --footer: var(--grey2);
   --highlight: var(--white);
   --overlay1: var(--lighter);
-  --overlay2: var(--dark);
-  --overlay3: var(--darker);
+  --overlay2: var(--darker);
   --text: var(--black);
-  --text-lt: var(--grey);
+  --version-text: var(--grey0);
 }

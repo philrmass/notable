@@ -2,14 +2,14 @@ import classnames from 'classnames';
 import styles from './Colors.module.css';
 
 const colors = [
-  'lch(80 50 0)',
-  'lch(80 50 45)',
-  'lch(80 50 90)',
-  'lch(80 50 135)',
-  'lch(80 50 315)',
-  'lch(80 50 270)',
-  'lch(80 50 225)',
-  'lch(80 50 180)',
+  'var(--note0)',
+  'var(--note1)',
+  'var(--note2)',
+  'var(--note3)',
+  'var(--note7)',
+  'var(--note6)',
+  'var(--note5)',
+  'var(--note4)',
 ];
 
 export default function Colors({
@@ -18,18 +18,18 @@ export default function Colors({
 }) {
   return (
     <div className={styles.colors}>
-      { colors.map((col) => {
+      { colors.map((c) => {
         const classes = classnames(
           styles.color,
-          { [styles.selected]: col === color },
+          { [styles.selected]: c === color },
         );
 
         return (
           <button
-            key={col}
-            style={{ background: col }}
+            key={c}
+            style={{ background: c }}
             className={classes}
-            onClick={() => onColorSelect(col)}
+            onClick={() => onColorSelect(c)}
           />
         );
       }) }

@@ -84,10 +84,14 @@ button:focus {
   color: var(--button-text);
 }
 
+.icon-button:disabled {
+  background: var(--button-disabled);
+  color: var(--button-disabled-text);
+}
+
 .controls .icon-button {
   --size: 22px;
 
   width: var(--size);
   height: var(--size);
-  background: var(--overlay2);
 }

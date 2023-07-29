@@ -14,6 +14,7 @@ export default function Notes({
 }) {
   const note = notes[id];
   const children = note.children.map((id) => notes[id]);
+  const hasParent = Boolean(note.parentId);
 
   if (!note) {
     route('/notes/root', true);
@@ -24,7 +25,14 @@ export default function Notes({
       <div className={styles.main}>
         { note.text && (
           <div className={styles.parent}>
-            <div>{note.text}</div>
+            <Note
+              key={note.id}
+              {...note}
+              isParent={true}
+              deleteNote={deleteNote} 
+              moveNote={moveNote}
+              openMenu={openMenu} 
+            />
           </div>
         )}
         <div className={styles.content}>
@@ -43,7 +51,7 @@ export default function Notes({
         <div className={styles.footer}>
           <button
             className="icon-button"
-            onClick={() => addNote(id)}
+            onClick={() => addNote()}
           >
             +
           </button>
@@ -55,6 +63,7 @@ export default function Notes({
           </Link>
           <button
             className="icon-button"
+            disabled={!hasParent}
             onClick={() => goUp()}
           >
             ^

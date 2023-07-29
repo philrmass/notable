@@ -18,5 +18,5 @@
   width: var(--dot);
   height: var(--dot);
   border-radius: 50%;
-  background: var(--overlay3);
+  background: var(--overlay2);
 }

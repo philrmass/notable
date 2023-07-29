@@ -6,13 +6,18 @@ import styles from './Note.module.css';
 
 export default function Note({
   id,
+  children,
   color,
   text,
+  isParent = false,
   deleteNote,
   moveNote,
   openMenu,
 }) {
   const type = 'Note';
+  const childCount = children.length;
+  const showEdit = isParent || childCount === 0;
+  const url = `/notes/${id}${showEdit ? '/edit' : ''}`;
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type,
@@ -55,9 +60,14 @@ export default function Note({
         </button>
       </div>
       <div className="text">
-        <Link key={id} href={`/notes/${id}/edit`}>
+        <Link key={id} href={url}>
           <div className={styles.link}>
             { text }
+            { !isParent && (
+              <div className={styles.count}>
+                { childCount }
+              </div>
+            ) }
           </div>
         </Link>
       </div>

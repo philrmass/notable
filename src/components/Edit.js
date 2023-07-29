@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import classnames from 'classnames';
 import { route } from 'preact-router';
+import { useLocalStorage } from 'utilities/hooks';
 import Colors from './Colors';
 import Handle from './Handle';
 import styles from './Edit.module.css';
@@ -21,22 +22,29 @@ export default function Edit({
   parentId,
   saveNote,
 }) {
-  const [note, setNote] = useState(notes[id] ?? {});
-  const [keyboard, setKeyboard] = useState(false);
-  const isComplete = Boolean(note.text);
+  const defaultColor = 'var(--note-default)';
+  const [lastColor, setLastColor] = useLocalStorage('nLastColor', defaultColor);
+  const [note, setNote] = useState(notes[id]);
 
   useEffect(() => {
     const existing = notes[id];
+
     if (existing) {
       setNote(existing);
-    } else {
-      // ??? use existing color, parent color, last color, default
-      const color = '#80c0ff';
-      setNote(getDefaultNote(id, color));
     }
   }, [notes, id]);
 
+  useEffect(() => {
+    if (!notes[id] && !note) {
+      const parentColor = notes[parentId]?.color;
+      const color = parentColor ?? lastColor;
+
+      setNote(getDefaultNote(id, color));
+    }
+  }, [notes, parentId, id, note, lastColor]);
+
   const handleColorChange = (color) => {
+    setLastColor(color);
     setNote((note) => ({ ...note, color }));
   };
 
@@ -45,15 +53,20 @@ export default function Edit({
   };
 
   const close = () => {
+    setNote(null);
     route(`/notes/${parentId}`);
   };
 
   const handleSave = () => {
+    setNote(null);
     saveNote(note, parentId);
     close();
   };
 
-  const noteStyles = { background: note.color };
+  const text = note?.text ?? '';
+  const color = note?.color ?? '';
+  const isComplete = Boolean(text);
+  const noteStyles = { background: color };
   const textClasses = classnames('text', styles.text);
 
   return (
@@ -61,7 +74,7 @@ export default function Edit({
       <div className={styles.top} />
       <div className={styles.colors}>
         <Colors
-          color={note.color}
+          color={color}
           onColorSelect={handleColorChange}
         />
       </div>
@@ -70,10 +83,8 @@ export default function Edit({
         <textarea
           autoFocus
           className={textClasses}
-          value={note.text}
+          value={text}
           onInput={(e) => handleTextChange(e.target.value)}
-          onBlur={() => setKeyboard(false)}
-          onFocus={() => setKeyboard(true)}
         />
         <Handle />
       </div>
@@ -92,9 +103,6 @@ export default function Edit({
           Cancel
         </button>
       </div>
-      { !keyboard && (
-        <div className={styles.bottom} />
-      ) }
     </div>
   );
 }

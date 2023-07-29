@@ -4,14 +4,10 @@
   display: flex;
   flex-direction: column;
   padding: var(--gap0);
-  background: var(--grey);
+  background: var(--bg);
 }
 
 .top {
-  flex-grow: 1;
-}
-
-.bottom {
   flex-grow: 1;
 }
 

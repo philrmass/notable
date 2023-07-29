@@ -8,6 +8,7 @@
 
 .parent {
   flex-shrink: 0;
+  border: 3px solid var(--bg);
 }
 
 .content {
@@ -32,12 +33,12 @@
 }
 
 .footer a {
-  color: inherit;
+  color: var(--white);
   text-decoration: none;
 }
 
 .version {
   margin-left: var(--gap1);
   font-size: var(--font-size-sm);
-  color: var(--text-lt);
+  color: var(--version-text);
 }

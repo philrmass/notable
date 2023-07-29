@@ -16,13 +16,9 @@ const defaultNotes = {
   },
 };
 
-// ??? parent fixed at top, highlighted
-// ??? click note: edit or open if children
-// ??? fix init color
-// ??? implement move up
-// ??? implement all other actions
+// ??? implement move first
+// ??? implement move up 
 // ??? add actions file
-// ??? add child count on bottom-right
 // ??? add icons (plus, up, menu/dots)
 // ??? confirm if deleting note with children
 // ??? add move down children names modal
@@ -30,7 +26,7 @@ const defaultNotes = {
 // ??? add export
 // ??? add import
 // ??? save and restore scroll y by parentId
-// ??? pick initial colors
+// ??? pick set of colors
 // ??? color hcl editor
 export default function Home() {
   const rootName = 'root';
@@ -39,9 +35,8 @@ export default function Home() {
   const [menuId, setMenuId] = useState(null);
   const hasParent = parentId !== rootName;
 
-  const addNote = (pid) => {
+  const addNote = () => {
     const id = uuidv4();
-    setParentId(pid);
     route(`/notes/${id}/edit`);
   };
 
@@ -70,8 +65,11 @@ export default function Home() {
   };
 
   const goUp = () => {
-    // ??? implement, if hasParent
-    console.log('UP');
+    const upId = notes[parentId]?.parentId;
+
+    if (hasParent && upId) {
+      route(`/notes/${upId}`);
+    }
   };
 
   const moveDown = (id) => {
@@ -101,7 +99,7 @@ export default function Home() {
 
   const moveUp = (id) => {
     // ??? implement, if hasParent
-    console.log('MOVE-DOWN', id, 'pick child next');
+    console.log('MOVE-UP', id, 'pick child next');
   };
 
   const saveNote = (note, pid) => {
@@ -124,9 +122,18 @@ export default function Home() {
     });
   };
 
+  const handleUrlChange = (e) => {
+    if (e.path === '/notes/:id') {
+      setParentId(e.matches.id);
+    }
+  };
+
   return (
     <>
-      <Router history={createHashHistory()}>
+      <Router
+        history={createHashHistory()}
+        onChange={handleUrlChange} 
+      >
         <Edit
           path="/notes/:id/edit"
           notes={notes}
