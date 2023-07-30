@@ -2,8 +2,14 @@ import { useState } from 'preact/hooks';
 import { Router, route } from 'preact-router';
 import { createHashHistory } from 'history';
 import { v4 as uuidv4 } from 'uuid';
-import { move } from 'utilities/array';
 import { useLocalStorage } from 'utilities/hooks';
+import {
+  deleteChild,
+  findChildIds,
+  moveChild,
+  moveChildUp,
+  updateNote,
+} from '../utilities/actions';
 import Edit from './Edit';
 import Menu from './Menu';
 import Notes from './Notes';
@@ -16,11 +22,8 @@ const defaultNotes = {
   },
 };
 
-// ??? implement move first
-// ??? implement move up 
-// ??? add actions file
+// ??? add ConfirmDelete as a Modal, deleteNote(id, false)
 // ??? add icons (plus, up, menu/dots)
-// ??? confirm if deleting note with children
 // ??? add move down children names modal
 // ??? add font, PT Sans
 // ??? add export
@@ -33,6 +36,7 @@ export default function Home() {
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [menuId, setMenuId] = useState(null);
+  const [confirmDeleteIds, setConfirmDeleteIds] = useState([]);
   const hasParent = parentId !== rootName;
 
   const addNote = () => {
@@ -40,35 +44,22 @@ export default function Home() {
     route(`/notes/${id}/edit`);
   };
 
-  const deleteNote = (id) => {
-    setNotes((lastNotes) => {
-      const parent = lastNotes[parentId];
-      const children = parent.children.filter((childId) => childId !== id);
-      const nextNotes = Object.entries(lastNotes).reduce((all, [key, value]) => {
-        if (key !== id) {
-          return {
-            ...all,
-            [key]: value,
-          };
-        }
-        return all;
-      }, {});
+  const deleteNote = (id, confirm = true) => {
+    const ids = confirm ? findChildIds(notes, id) : [];
 
-      return {
-        ...nextNotes,
-        [parentId]: {
-          ...parent,
-          children,
-        },
-      };
-    });
+    setConfirmDeleteIds(ids);
+    console.log('delete', ids.length, ids);
+
+    if (ids.length <= 1) {
+      deleteChild(setNotes, parentId, id);
+    }
   };
 
   const goUp = () => {
-    const upId = notes[parentId]?.parentId;
+    const grandparentId = notes[parentId]?.parentId;
 
-    if (hasParent && upId) {
-      route(`/notes/${upId}`);
+    if (grandparentId) {
+      route(`/notes/${grandparentId}`);
     }
   };
 
@@ -78,48 +69,28 @@ export default function Home() {
   };
 
   const moveFirst = (id) => {
-    // ??? implement
-    console.log('MOVE-FIRST', id);
+    const index = notes[parentId].children.findIndex((child) => child === id);
+
+    moveChild(setNotes, parentId, index, 0);
   };
 
   const moveNote = (id, toId) => {
     const parent = notes[parentId];
-    const children = parent.children;
-    const index = children.findIndex((child) => child === id);
-    const toIndex = children.findIndex((child) => child === toId);
+    const fromIndex = parent.children.findIndex((child) => child === id);
+    const toIndex = parent.children.findIndex((child) => child === toId);
 
-    setNotes((lastNotes) => ({
-      ...lastNotes,
-      [parentId]: {
-        ...parent,
-        children: move(children, index, toIndex),
-      },
-    }));
+    moveChild(setNotes, parentId, fromIndex, toIndex);
   };
 
   const moveUp = (id) => {
-    // ??? implement, if hasParent
-    console.log('MOVE-UP', id, 'pick child next');
+    if (notes[parentId].parentId) {
+      moveChildUp(setNotes, parentId, id);
+      goUp();
+    }
   };
 
-  const saveNote = (note, pid) => {
-    setNotes((lastNotes) => {
-      const parent = lastNotes[pid];
-      const isNew = parent.children.findIndex((id) => id === note.id) === -1;
-      const children = isNew ? [...parent.children, note.id] : parent.children;
-
-      return {
-        ...lastNotes,
-        [note.id]: {
-          ...note,
-          parentId: pid,
-        },
-        [pid]: {
-          ...parent,
-          children,
-        },
-      };
-    });
+  const saveNote = (note) => {
+    updateNote(setNotes, parentId, note);
   };
 
   const handleUrlChange = (e) => {
@@ -138,7 +109,7 @@ export default function Home() {
           path="/notes/:id/edit"
           notes={notes}
           parentId={parentId}
-          saveNote={(n, pid) => saveNote(n, pid)}
+          saveNote={saveNote}
         />
         <Notes
           path="/notes/:id"
@@ -161,6 +132,9 @@ export default function Home() {
         moveUp={moveUp}
         onClose={() => setMenuId(null)}
       />
+      { (confirmDeleteIds.length >= 1) && (
+        <div>{`confirm delete (${confirmDeleteIds})`}</div>
+      ) }
     </>
   );
 }

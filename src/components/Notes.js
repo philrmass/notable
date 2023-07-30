@@ -15,6 +15,7 @@ export default function Notes({
   const note = notes[id];
   const children = note.children.map((id) => notes[id]);
   const hasParent = Boolean(note.parentId);
+  console.log(`  ${Object.keys(notes).length} notes`);
 
   if (!note) {
     route('/notes/root', true);

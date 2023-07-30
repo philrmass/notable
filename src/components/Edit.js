@@ -59,7 +59,7 @@ export default function Edit({
 
   const handleSave = () => {
     setNote(null);
-    saveNote(note, parentId);
+    saveNote(note);
     close();
   };
 
