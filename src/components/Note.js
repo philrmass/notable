@@ -1,6 +1,7 @@
 import { Link } from 'preact-router';
 import { useDrag, useDrop } from 'react-dnd';
 import classnames from 'classnames';
+import Icon from 'utilities/Icon';
 import Handle from './Handle';
 import styles from './Note.module.css';
 
@@ -50,20 +51,20 @@ export default function Note({
           className="icon-button"
           onClick={() => openMenu(id)}
         >
-          M
+          <Icon name="menu" className="icon" />
         </button>
         <button
           className="icon-button"
           onClick={() => deleteNote(id)}
         >
-          D
+          <Icon name="cross" className="icon" />
         </button>
       </div>
       <div className="text">
         <Link key={id} href={url}>
           <div className={styles.link}>
             { text }
-            { !isParent && (
+            { !isParent && childCount > 0 && (
               <div className={styles.count}>
                 { childCount }
               </div>

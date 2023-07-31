@@ -7,7 +7,7 @@
 .count {
   position: absolute;
   bottom: var(--gap0);
-  right: var(--gap1);
+  right: var(--gap0);
   padding: 0 var(--gap1);
   border-radius: 50%;
   background: var(--count);

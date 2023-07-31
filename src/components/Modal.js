@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'preact/hooks';
+import Icon from 'utilities/Icon';
 import styles from './Modal.module.css';
 
 export default function Modal({
@@ -28,7 +29,7 @@ export default function Modal({
               className={styles.close}
               onClick={onClose}
             >
-              X
+              <Icon name="cross" className={styles.icon} />
             </button>
           </div>
           <div className={styles.children}>

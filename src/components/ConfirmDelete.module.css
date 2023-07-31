@@ -1,0 +1,21 @@
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap1);
+}
+
+.buttons button {
+  padding: var(--gap1) var(--gap2);
+  border-radius: var(--radius1);
+  background: var(--button-alt);
+  color: var(--button-alt-text);
+}
+
+.buttons .delete {
+  background: var(--delete);
+}
+
+.text {
+  margin-bottom: var(--gap2);
+  white-space: pre-wrap;
+}

@@ -3,6 +3,7 @@ import { Router, route } from 'preact-router';
 import { createHashHistory } from 'history';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from 'utilities/hooks';
+import { getIconSvgs } from 'utilities/Icon';
 import {
   deleteChild,
   findChildIds,
@@ -11,9 +12,17 @@ import {
   updateNote,
 } from '../utilities/actions';
 import Edit from './Edit';
+import ConfirmDelete from './ConfirmDelete';
 import Menu from './Menu';
 import Notes from './Notes';
 import Redirect from './Redirect';
+
+const icons = [
+  'cross',
+  'menu',
+  'plus',
+  'up',
+];
 
 const defaultNotes = {
   root: {
@@ -22,15 +31,13 @@ const defaultNotes = {
   },
 };
 
-// ??? add ConfirmDelete as a Modal, deleteNote(id, false)
-// ??? add icons (plus, up, menu/dots)
-// ??? add move down children names modal
-// ??? add font, PT Sans
-// ??? add export
 // ??? add import
-// ??? save and restore scroll y by parentId
+// ??? add export
+// ??? add every month save
 // ??? pick set of colors
 // ??? color hcl editor
+// ??? add move down children names modal
+// ??? save and restore scroll y by parentId
 export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
@@ -48,7 +55,6 @@ export default function Home() {
     const ids = confirm ? findChildIds(notes, id) : [];
 
     setConfirmDeleteIds(ids);
-    console.log('delete', ids.length, ids);
 
     if (ids.length <= 1) {
       deleteChild(setNotes, parentId, id);
@@ -132,9 +138,12 @@ export default function Home() {
         moveUp={moveUp}
         onClose={() => setMenuId(null)}
       />
-      { (confirmDeleteIds.length >= 1) && (
-        <div>{`confirm delete (${confirmDeleteIds})`}</div>
-      ) }
+      <ConfirmDelete
+        count={confirmDeleteIds.length - 1}
+        onDelete={() => deleteNote(confirmDeleteIds?.[0], false)}
+        onClose={() => setConfirmDeleteIds([])}
+      />
+      { getIconSvgs(icons) }
     </>
   );
 }

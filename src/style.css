@@ -52,13 +52,20 @@ html, body {
   flex-shrink: 0;
 }
 
+button {
+  padding: 0;
+  border: 0;
+  background: var(--button);
+  color: var(--button-text);
+  font: inherit;
+}
+
 button:focus {
   outline: none;
 }
 
 .button {
   padding: var(--gap1) var(--gap2);
-  border: 0;
   border-radius: var(--radius1);
   background: var(--button);
   color: var(--button-text);
@@ -71,17 +78,10 @@ button:focus {
 }
 
 .icon-button {
-  --size: 30px;
-
-  width: var(--size);
-  height: var(--size);
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0;
   border-radius: 50%;
-  background: var(--button);
-  color: var(--button-text);
 }
 
 .icon-button:disabled {
@@ -89,9 +89,12 @@ button:focus {
   color: var(--button-disabled-text);
 }
 
-.controls .icon-button {
-  --size: 22px;
+.icon {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+}
 
-  width: var(--size);
-  height: var(--size);
+.controls .icon {
+  width: var(--icon);
+  height: var(--icon);
 }

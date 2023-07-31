@@ -39,4 +39,5 @@
 
 .buttons button {
   flex-grow: 1;
+  padding: var(--gap2);
 }

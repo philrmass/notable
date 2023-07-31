@@ -1,7 +1,12 @@
 :root {
-  --font: 'Helvetica Neue', arial, sans-serif;
+  --font: "Inter", "Helvetica Neue", sans-serif;
   --font-size: 16px;
   --font-size-lg: 32px;
   --font-size-sm: 12px;
   --line-height: 1.2em;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("../assets/Inter-VariableFont_slnt,wght.ttf")
 }

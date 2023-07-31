@@ -8,7 +8,9 @@
 
 .parent {
   flex-shrink: 0;
-  border: 3px solid var(--bg);
+  padding-bottom: var(--gap0);
+  background: var(--bg-alt);
+  margin: var(--note-gap) var(--note-gap) 0 var(--note-gap);
 }
 
 .content {
@@ -26,7 +28,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--gap1) var(--gap2);
-  background: var(--footer);
+  background: var(--bg-alt);
   box-shadow:
     0 -2px 5px 0 rgb(0 0 0 / 12%),
     0 -3px 10px 0 rgb(0 0 0 / 16%);

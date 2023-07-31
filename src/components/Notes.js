@@ -1,4 +1,5 @@
 import { Link, route } from 'preact-router';
+import Icon from 'utilities/Icon';
 import Note from './Note';
 import { version } from '../../package.json';
 import styles from './Notes.module.css';
@@ -15,7 +16,6 @@ export default function Notes({
   const note = notes[id];
   const children = note.children.map((id) => notes[id]);
   const hasParent = Boolean(note.parentId);
-  console.log(`  ${Object.keys(notes).length} notes`);
 
   if (!note) {
     route('/notes/root', true);
@@ -54,7 +54,7 @@ export default function Notes({
             className="icon-button"
             onClick={() => addNote()}
           >
-            +
+            <Icon name="plus" className="icon" />
           </button>
           <Link href="/notes/root">
             Notable
@@ -67,7 +67,7 @@ export default function Notes({
             disabled={!hasParent}
             onClick={() => goUp()}
           >
-            ^
+            <Icon name="up" className="icon" />
           </button>
         </div>
       </div>
