@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import { useDragLayer } from 'react-dnd';
+import Icon from 'utilities/Icon';
 import Handle from './Handle';
 import styles from './NoteDragLayer.module.css';
 
@@ -29,8 +30,12 @@ export default function NoteDragLayer() {
   return (
     <div className={noteClasses} style={noteStyle}>
       <div className="controls">
-        <button className="icon-button">M</button>
-        <button className="icon-button">D</button>
+        <button className="icon-button">
+          <Icon name="menu" className="icon" />
+        </button>
+        <button className="icon-button">
+          <Icon name="cross" className="icon" />
+        </button>
       </div>
       <div className={textClasses}>
         { item.text }

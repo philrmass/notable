@@ -8,16 +8,20 @@ import {
   deleteChild,
   findChildIds,
   moveChild,
+  moveChildDown,
   moveChildUp,
   updateNote,
 } from '../utilities/actions';
 import Edit from './Edit';
 import ConfirmDelete from './ConfirmDelete';
 import Menu from './Menu';
+import MoveDownParents from './MoveDownParents';
 import Notes from './Notes';
 import Redirect from './Redirect';
 
 const icons = [
+  'caretDown',
+  'caretUp',
   'cross',
   'menu',
   'plus',
@@ -31,18 +35,22 @@ const defaultNotes = {
   },
 };
 
-// ??? add import
+// ??? up becomes menu at top: import, export
 // ??? add export
+// ??? add import
 // ??? add every month save
+// ??? add logo files
+// ??? add logo to footer
 // ??? pick set of colors
 // ??? color hcl editor
-// ??? add move down children names modal
+// ??? scroll to new note
 // ??? save and restore scroll y by parentId
 export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [menuId, setMenuId] = useState(null);
+  const [moveDownId, setMoveDownId] = useState(null);
   const [confirmDeleteIds, setConfirmDeleteIds] = useState([]);
   const hasParent = parentId !== rootName;
 
@@ -70,8 +78,13 @@ export default function Home() {
   };
 
   const moveDown = (id) => {
-    // ??? implement
-    console.log('MOVE-DOWN', id, 'pick child next');
+    setMoveDownId(id);
+  };
+
+  const moveDownConfirm = (nextParentId) => {
+    moveChildDown(setNotes, parentId, nextParentId, moveDownId);
+    setMoveDownId(null);
+    route(`/notes/${nextParentId}`);
   };
 
   const moveFirst = (id) => {
@@ -95,8 +108,8 @@ export default function Home() {
     }
   };
 
-  const saveNote = (note) => {
-    updateNote(setNotes, parentId, note);
+  const saveNote = (note, toFirst) => {
+    updateNote(setNotes, parentId, note, toFirst);
   };
 
   const handleUrlChange = (e) => {
@@ -142,6 +155,14 @@ export default function Home() {
         count={confirmDeleteIds.length - 1}
         onDelete={() => deleteNote(confirmDeleteIds?.[0], false)}
         onClose={() => setConfirmDeleteIds([])}
+      />
+      <MoveDownParents
+        moveDownId={moveDownId}
+        notes={notes}
+        parentId={parentId}
+        shown={Boolean(moveDownId)}
+        onClose={() => setMoveDownId(null)}
+        onSelect={moveDownConfirm}
       />
       { getIconSvgs(icons) }
     </>

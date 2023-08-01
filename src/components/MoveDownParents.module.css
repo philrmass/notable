@@ -1,0 +1,16 @@
+.message {
+  margin-bottom: var(--gap1);
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--note-gap);
+  background: var(--bg);
+  padding: var(--note-gap);
+}
+
+.note {
+  text-align: left;
+  padding: var(--gap1) var(--gap1);
+}

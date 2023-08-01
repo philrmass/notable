@@ -47,6 +47,34 @@ export function moveChild(setNotes, parentId, fromIndex, toIndex) {
   });
 }
 
+export function moveChildDown(setNotes, parentId, nextParentId, id) {
+  setNotes((lastNotes) => {
+    const note = lastNotes[id];
+
+    const parent = lastNotes[parentId];
+    const children = parent.children.filter((childId) => childId !== id);
+
+    const nextParent = lastNotes[nextParentId];
+    const nextChildren = [...nextParent.children, id]; 
+
+    return {
+      ...lastNotes,
+      [nextParentId]: {
+        ...nextParent,
+        children: nextChildren,
+      },
+      [parentId]: {
+        ...parent,
+        children,
+      },
+      [id]: {
+        ...note,
+        parentId: nextParentId,
+      },
+    };
+  });
+}
+
 export function moveChildUp(setNotes, parentId, id) {
   setNotes((lastNotes) => {
     const note = lastNotes[id];
@@ -78,11 +106,19 @@ export function moveChildUp(setNotes, parentId, id) {
   });
 }
 
-export function updateNote(setNotes, parentId, note) {
+function updateChildren(children, id, isNew, toFirst) {
+  if (!isNew) {
+    return children;
+  }
+
+  return (toFirst ? [id, ...children] : [...children, id]);
+}
+
+export function updateNote(setNotes, parentId, note, toFirst = false) {
   setNotes((lastNotes) => {
     const parent = lastNotes[parentId];
     const isNew = parent.children.findIndex((id) => id === note.id) === -1;
-    const children = isNew ? [...parent.children, note.id] : parent.children;
+    const children = updateChildren(parent.children, note.id, isNew, toFirst);
 
     return {
       ...lastNotes,

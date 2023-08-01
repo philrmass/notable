@@ -52,9 +52,10 @@ export default function Notes({
         <div className={styles.footer}>
           <button
             className="icon-button"
-            onClick={() => addNote()}
+            disabled={!hasParent}
+            onClick={() => goUp()}
           >
-            <Icon name="plus" className="icon" />
+            <Icon name="up" className="icon" />
           </button>
           <Link href="/notes/root">
             Notable
@@ -64,10 +65,9 @@ export default function Notes({
           </Link>
           <button
             className="icon-button"
-            disabled={!hasParent}
-            onClick={() => goUp()}
+            onClick={() => addNote()}
           >
-            <Icon name="up" className="icon" />
+            <Icon name="plus" className="icon" />
           </button>
         </div>
       </div>

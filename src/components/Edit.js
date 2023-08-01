@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import classnames from 'classnames';
 import { route } from 'preact-router';
 import { useLocalStorage } from 'utilities/hooks';
+import Icon from 'utilities/Icon';
 import Colors from './Colors';
 import Handle from './Handle';
 import styles from './Edit.module.css';
@@ -25,6 +26,7 @@ export default function Edit({
   const defaultColor = 'var(--note-default)';
   const [lastColor, setLastColor] = useLocalStorage('nLastColor', defaultColor);
   const [note, setNote] = useState(notes[id]);
+  const [toFirst, setToFirst] = useState(false);
 
   useEffect(() => {
     const existing = notes[id];
@@ -59,7 +61,7 @@ export default function Edit({
 
   const handleSave = () => {
     setNote(null);
-    saveNote(note);
+    saveNote(note, toFirst);
     close();
   };
 
@@ -79,7 +81,22 @@ export default function Edit({
         />
       </div>
       <div style={noteStyles} className="note">
-        <div className="controls" />
+        <div className="controls">
+          <button
+            disabled={toFirst}
+            className="icon-button"
+            onClick={() => setToFirst(true)}
+          >
+            <Icon name="caretUp" className="icon" />
+          </button>
+          <button
+            disabled={!toFirst}
+            className="icon-button"
+            onClick={() => setToFirst(false)}
+          >
+            <Icon name="caretDown" className="icon" />
+          </button>
+        </div>
         <textarea
           autoFocus
           className={textClasses}
