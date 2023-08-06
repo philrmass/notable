@@ -46,7 +46,6 @@ const defaultNotes = {
   },
 };
 
-// ??? add logo files
 // ??? add logo to footer
 // ??? pick set of colors
 // ??? color hcl editor
