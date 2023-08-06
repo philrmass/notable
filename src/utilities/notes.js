@@ -86,6 +86,12 @@ export function findChildIds(notes, id, childIds = []) {
   return childIds.concat(id, ...note.children.map((childId) => findChildIds(notes, childId)));
 }
 
+export function getLastAt(notes) {
+  return Object.values(notes).reduce((lastAt, note) => (
+    note.at > lastAt ? note.at : lastAt
+  ), 0);
+}
+
 export function getSaveFilePath(at = Date.now()) {
   const when = new Date(at);
   const year = when.getFullYear();

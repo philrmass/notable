@@ -45,5 +45,6 @@
   --overlay1: var(--lighter);
   --overlay2: var(--darker);
   --text: var(--black);
+  --text-alt: var(--grey0);
   --version-text: var(--grey0);
 }

@@ -1,7 +1,7 @@
 import Modal from './Modal';
-import styles from './Menu.module.css';
+import styles from './TopMenu.module.css';
 
-export default function Menu({
+export default function TopMenu({
   exportNotes,
   importNotes,
   onClose,

@@ -123,6 +123,7 @@ export function updateNote(setNotes, parentId, note, toFirst = false) {
       },
       [note.id]: {
         ...note,
+        at: Date.now(),
         parentId,
       },
     };

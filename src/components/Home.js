@@ -5,6 +5,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { loadJsonFile, saveJsonFile } from 'utilities/file';
 import { useLocalStorage } from 'utilities/hooks';
 import { getIconSvgs } from 'utilities/Icon';
+import { inSameMonth } from 'utilities/time';
+import Edit from './Edit';
+import ConfirmDelete from './ConfirmDelete';
+import Menu from './Menu';
+import Message from './Message';
+import MonthlySave from './MonthlySave';
+import MoveDownParents from './MoveDownParents';
+import Notes from './Notes';
+import Redirect from './Redirect';
+import TopMenu from './TopMenu';
 import {
   deleteChild,
   moveChild,
@@ -12,17 +22,10 @@ import {
   moveChildUp,
   updateNote,
 } from '../utilities/actions';
-import Edit from './Edit';
-import ConfirmDelete from './ConfirmDelete';
-import Menu from './Menu';
-import Message from './Message';
-import MoveDownParents from './MoveDownParents';
-import Notes from './Notes';
-import Redirect from './Redirect';
-import TopMenu from './TopMenu';
 import {
   addNotes,
   findChildIds,
+  getLastAt,
   getSaveFilePath,
   parseNotes,
 } from '../utilities/notes';
@@ -43,11 +46,11 @@ const defaultNotes = {
   },
 };
 
-// ??? add every month save
 // ??? add logo files
 // ??? add logo to footer
 // ??? pick set of colors
 // ??? color hcl editor
+// ??? make a menu modal component, message, options { label, fcn }
 // ??? scroll to new note
 // ??? save and restore scroll y by parentId
 export default function Home() {
@@ -56,6 +59,7 @@ export default function Home() {
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [message, setMessage] = useState('');
   const [topMenuShown, setTopMenuShown] = useState(false);
+  const [monthlySaveShown, setMonthlySaveShown] = useState(false);
   const [menuId, setMenuId] = useState(null);
   const [moveDownId, setMoveDownId] = useState(null);
   const [confirmDeleteIds, setConfirmDeleteIds] = useState([]);
@@ -140,7 +144,18 @@ export default function Home() {
   };
 
   const saveNote = (note, toFirst) => {
+    checkMonthlySave();
     updateNote(setNotes, parentId, note, toFirst);
+  };
+
+  const checkMonthlySave = () => {
+    const at = Date.now();
+    const lastAt = getLastAt(notes);
+    const noteCount = Object.keys(notes).length;
+
+    if (!inSameMonth(at, lastAt) && noteCount > 3) {
+      setMonthlySaveShown(true);
+    }
   };
 
   const handleUrlChange = (e) => {
@@ -192,6 +207,11 @@ export default function Home() {
         moveFirst={moveFirst}
         moveUp={moveUp}
         onClose={() => setMenuId(null)}
+      />
+      <MonthlySave 
+        shown={monthlySaveShown}
+        onClose={() => setMonthlySaveShown(false)}
+        onSave={() => exportNotes()}
       />
       <ConfirmDelete
         count={confirmDeleteIds.length - 1}
