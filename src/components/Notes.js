@@ -69,10 +69,18 @@ export default function Notes({
             </button>
           ) }
           <Link href="/notes/root">
-            Notable
-            <span className={styles.version}>
-              {`v${version}`}
-            </span>
+            <div className={styles.link}>
+              <img
+                src="./assets/icon.png"
+                className={styles.icon}
+              />
+              <div className={styles.name}>
+                Notable
+                <div className={styles.version}>
+                  {`v${version}`}
+                </div>
+              </div>
+            </div>
           </Link>
           <button
             className="icon-button"

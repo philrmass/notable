@@ -12,7 +12,7 @@
   border-radius: 50%;
   background: var(--count);
   color: var(--count-text);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-sm1);
 }
 
 .hidden {

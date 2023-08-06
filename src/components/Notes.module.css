@@ -39,8 +39,25 @@
   text-decoration: none;
 }
 
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: var(--icon-lg);
+}
+
+.name {
+  position: relative;
+  font-size: var(--font-size-lg0);
+}
+
 .version {
+  position: absolute;
+  right: calc(-1 * var(--gap1));
+  top: var(--font-size);
   margin-left: var(--gap1);
-  font-size: var(--font-size-sm);
-  color: var(--version-text);
+  font-size: var(--font-size-sm1);
+  color: var(--text-alt);
 }

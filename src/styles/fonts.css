@@ -1,9 +1,10 @@
 :root {
   --font: "Inter", "Helvetica Neue", sans-serif;
+  --font-size-lg1: 32px;
+  --font-size-lg0: 20px;
   --font-size: 16px;
-  --font-size-lg: 32px;
-  --font-size-md: 15px;
-  --font-size-sm: 12px;
+  --font-size-sm0: 15px;
+  --font-size-sm1: 12px;
   --line-height: 1.2em;
 }
 

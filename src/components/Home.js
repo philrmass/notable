@@ -46,9 +46,7 @@ const defaultNotes = {
   },
 };
 
-// ??? add logo to footer
-// ??? pick set of colors
-// ??? color hcl editor
+// ??? color hcl editor, save array as json
 // ??? make a menu modal component, message, options { label, fcn }
 // ??? scroll to new note
 // ??? save and restore scroll y by parentId
