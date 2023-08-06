@@ -1,7 +1,7 @@
 {
   "bundle.css": "bundle.8c5f2.css",
-  "bundle.js": "bundle.9eb10.esm.js",
-  "bundle.js.map": "bundle.9eb10.esm.js.map",
+  "bundle.js": "bundle.c1504.esm.js",
+  "bundle.js.map": "bundle.c1504.esm.js.map",
   "polyfills.js": "polyfills.11445.esm.js",
   "polyfills.js.map": "polyfills.11445.esm.js.map",
   "Inter-VariableFont_slnt,wght.ttf": "aadb65ac45347ff466994751a3a83e94.ttf",
@@ -9,6 +9,7 @@
   "assets/Inter-VariableFont_slnt,wght.ttf": "assets/Inter-VariableFont_slnt,wght.ttf",
   "assets/favicon.ico": "assets/favicon.ico",
   "assets/icon.png": "assets/icon.png",
+  "assets/iconMaskable.png": "assets/iconMaskable.png",
   "assets/logo.svg": "assets/logo.svg",
   "manifest.json": "manifest.json",
   "sw-esm.js": "sw-esm.js",
