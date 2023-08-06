@@ -1,4 +1,5 @@
 import { move } from 'utilities/array';
+import { findChildIds } from './notes';
 
 export function deleteChild(setNotes, parentId, id) {
   setNotes((lastNotes) => {
@@ -25,12 +26,6 @@ export function deleteChild(setNotes, parentId, id) {
       },
     };
   });
-}
-
-export function findChildIds(notes, id, childIds = []) {
-  const note = notes[id];
-
-  return childIds.concat(id, ...note.children.map((childId) => findChildIds(notes, childId)));
 }
 
 export function moveChild(setNotes, parentId, fromIndex, toIndex) {

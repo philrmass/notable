@@ -18,7 +18,7 @@ html, body {
 
 .note {
   display: flex;
-  border-radius: var(--radius0);
+  border-radius: var(--radius1);
   background: white;
 }
 

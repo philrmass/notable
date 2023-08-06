@@ -12,6 +12,7 @@ export default function Notes({
   goUp,
   moveNote,
   openMenu,
+  showTopMenu,
 }) {
   const note = notes[id];
   const children = note.children.map((id) => notes[id]);
@@ -50,13 +51,23 @@ export default function Notes({
           </div>
         </div>
         <div className={styles.footer}>
-          <button
-            className="icon-button"
-            disabled={!hasParent}
-            onClick={() => goUp()}
-          >
-            <Icon name="up" className="icon" />
-          </button>
+          { !hasParent && (
+            <button
+              className="icon-button"
+              onClick={() => showTopMenu()}
+            >
+              <Icon name="menu" className="icon" />
+            </button>
+          ) }
+          { hasParent && (
+            <button
+              className="icon-button"
+              disabled={!hasParent}
+              onClick={() => goUp()}
+            >
+              <Icon name="up" className="icon" />
+            </button>
+          ) }
           <Link href="/notes/root">
             Notable
             <span className={styles.version}>

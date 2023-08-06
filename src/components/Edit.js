@@ -7,13 +7,14 @@ import Colors from './Colors';
 import Handle from './Handle';
 import styles from './Edit.module.css';
 
-function getDefaultNote(id, color) {
+function getDefaultNote(id, parentId, color) {
   return {
     at: Date.now(),
     children: [],
     color,
-    text: '',
     id,
+    parentId,
+    text: '',
   };
 }
 
@@ -41,7 +42,7 @@ export default function Edit({
       const parentColor = notes[parentId]?.color;
       const color = parentColor ?? lastColor;
 
-      setNote(getDefaultNote(id, color));
+      setNote(getDefaultNote(id, parentId, color));
     }
   }, [notes, parentId, id, note, lastColor]);
 

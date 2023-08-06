@@ -2,11 +2,11 @@ import { useState } from 'preact/hooks';
 import { Router, route } from 'preact-router';
 import { createHashHistory } from 'history';
 import { v4 as uuidv4 } from 'uuid';
+import { loadJsonFile, saveJsonFile } from 'utilities/file';
 import { useLocalStorage } from 'utilities/hooks';
 import { getIconSvgs } from 'utilities/Icon';
 import {
   deleteChild,
-  findChildIds,
   moveChild,
   moveChildDown,
   moveChildUp,
@@ -15,9 +15,17 @@ import {
 import Edit from './Edit';
 import ConfirmDelete from './ConfirmDelete';
 import Menu from './Menu';
+import Message from './Message';
 import MoveDownParents from './MoveDownParents';
 import Notes from './Notes';
 import Redirect from './Redirect';
+import TopMenu from './TopMenu';
+import {
+  addNotes,
+  findChildIds,
+  getSaveFilePath,
+  parseNotes,
+} from '../utilities/notes';
 
 const icons = [
   'caretDown',
@@ -35,9 +43,6 @@ const defaultNotes = {
   },
 };
 
-// ??? up becomes menu at top: import, export
-// ??? add export
-// ??? add import
 // ??? add every month save
 // ??? add logo files
 // ??? add logo to footer
@@ -49,6 +54,8 @@ export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
+  const [message, setMessage] = useState('');
+  const [topMenuShown, setTopMenuShown] = useState(false);
   const [menuId, setMenuId] = useState(null);
   const [moveDownId, setMoveDownId] = useState(null);
   const [confirmDeleteIds, setConfirmDeleteIds] = useState([]);
@@ -56,6 +63,7 @@ export default function Home() {
 
   const addNote = () => {
     const id = uuidv4();
+
     route(`/notes/${id}/edit`);
   };
 
@@ -69,11 +77,34 @@ export default function Home() {
     }
   };
 
+  const exportNotes = () => {
+    saveJsonFile(getSaveFilePath(), notes);
+  };
+
   const goUp = () => {
     const grandparentId = notes[parentId]?.parentId;
 
     if (grandparentId) {
       route(`/notes/${grandparentId}`);
+    }
+  };
+
+  const importNotes = async (add) => {
+    const data = await loadJsonFile();
+    const parsed = parseNotes(data);
+
+    if (parsed.error) {
+      setMessage(parsed.error);
+    } else if (parsed.notes) {
+      const count = Object.keys(parsed.notes).length;
+
+      if (add) {
+        setNotes((last) => addNotes(last, parsed.notes));
+        setMessage(`Added ${count} notes`);
+      } else {
+        setNotes(parsed.notes);
+        setMessage(`Imported ${count} notes`);
+      }
     }
   };
 
@@ -138,9 +169,20 @@ export default function Home() {
           goUp={goUp}
           moveNote={moveNote}
           openMenu={(id) => setMenuId(id)} 
+          showTopMenu={() => setTopMenuShown(true)}
         />
         <Redirect default to="/notes/root" />
       </Router>
+      <Message 
+        message={message}
+        onClose={() => setMessage('')}
+      />
+      <TopMenu 
+        shown={topMenuShown}
+        importNotes={importNotes}
+        exportNotes={exportNotes}
+        onClose={() => setTopMenuShown(false)}
+      />
       <Menu
         id={menuId}
         hasParent={hasParent}

@@ -10,7 +10,6 @@
   --icon-lg: 32px;
   --note-gap: 2px;
   --note-height: calc(3 * var(--line-height) + 2 * var(--gap1));
-  --radius0: 2px;
   --radius1: 4px;
   --text-padding: var(--gap1) var(--gap2);
 }
