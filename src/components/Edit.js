@@ -74,11 +74,14 @@ export default function Edit({
 
   return (
     <div className={styles.main}>
-      <div className={styles.top} />
+      <div
+        className={styles.top}
+        onClick={() => route('/colors')}
+      />
       <div className={styles.colors}>
         <Colors
           color={color}
-          onColorSelect={handleColorChange}
+          onSelect={handleColorChange}
         />
       </div>
       <div style={noteStyles} className="note">

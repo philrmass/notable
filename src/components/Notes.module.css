@@ -55,9 +55,9 @@
 
 .version {
   position: absolute;
-  right: calc(-1 * var(--gap1));
+  right: -2.9em;
   top: var(--font-size);
   margin-left: var(--gap1);
   font-size: var(--font-size-sm1);
-  color: var(--text-alt);
+  color: var(--version-text);
 }

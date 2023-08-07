@@ -7,6 +7,7 @@ import { useLocalStorage } from 'utilities/hooks';
 import { getIconSvgs } from 'utilities/Icon';
 import { inSameMonth } from 'utilities/time';
 import Edit from './Edit';
+import EditColor from './EditColor';
 import ConfirmDelete from './ConfirmDelete';
 import Menu from './Menu';
 import Message from './Message';
@@ -142,7 +143,7 @@ export default function Home() {
 
   const saveNote = (note, toFirst) => {
     checkMonthlySave();
-    updateNote(setNotes, parentId, note, toFirst);
+    updateNote(setNotes, note.parentId, note, toFirst);
   };
 
   const checkMonthlySave = () => {
@@ -167,6 +168,9 @@ export default function Home() {
         history={createHashHistory()}
         onChange={handleUrlChange} 
       >
+        <EditColor
+          path="/colors"
+        />
         <Edit
           path="/notes/:id/edit"
           notes={notes}

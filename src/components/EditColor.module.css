@@ -1,0 +1,54 @@
+.main {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap0);
+  background: var(--bg);
+}
+
+.colors {
+  height: calc(2 * var(--note-height));
+  margin: var(--gap2) 0;
+}
+
+.color2 {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 20px solid transparent;
+  border-color: #cf8 #f8c #88f #f88;
+}
+
+.color1 {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 20px solid transparent;
+  border-color: #8f8 #f8f #8cf #fc8;
+}
+
+.color0 {
+  flex-grow: 1;
+  width: 100%;
+  background: #88f;
+  border: 20px solid transparent;
+  border-color: #8fc #c8f #8ff #ff8;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap0);
+  margin: var(--gap2) 0;
+}
+
+.buttons button {
+  flex-grow: 1;
+  padding: var(--gap2);
+}
