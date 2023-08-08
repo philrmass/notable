@@ -1,27 +1,30 @@
-import { useState } from 'preact/hooks';
-// import classnames from 'classnames';
+import { useEffect, useState } from 'preact/hooks';
 import { route } from 'preact-router';
 // import { useLocalStorage } from 'utilities/hooks';
-import {
-  getMovePercentages,
-  getTouches,
-} from '../utilities/touch';
+import { parseLch } from '../utilities/color';
+import { getMovePercentages, getTouches } from '../utilities/touch';
 import Colors from './Colors';
 import styles from './EditColor.module.css';
 
-// ??? parse color into lightness, chroma, hue, useState
-// ??? cursor movement changes color
-// ??? getDisplayColors(l, c, h, xAxis, yAxis);
 // ??? add clickable axes, click switches to other possible
 // ??? display lch value in upper right
 export default function EditColor() {
   // const [_, setColors] = useLocalStorage('nColors', []);
   const [index, setIndex] = useState(null);
   const [touches, setTouches] = useState([]);
-  // ??? 3 components, 2 axes
+  const [lch, setLch] = useState({ l: 50, c: 0, h: 0 });
+  const [display, setDisplay] = useState({});
+
+  useEffect(() => {
+    const { l, c, h } = lch;
+    const center = `lch(${l} ${c} ${h})`;
+    // ???? getDisplayColors(lch, xAxis, yAxis);
+    console.log('calcColors', center);
+    setDisplay({ center });
+  }, [lch]);
 
   const handleColorSelect = (color, index) => {
-    // ??? parseColor(color);
+    setLch(parseLch(color)); 
     setIndex(index);
   };
 
@@ -51,16 +54,17 @@ export default function EditColor() {
 
   function handleMove(e) {
     const nextTouches = getTouches(e);
-    setTouches(nextTouches);
-    console.log(` move (${nextTouches[0]?.x}, ${nextTouches[0]?.y})`);
     const { dx, dy } = getMovePercentages(touches, nextTouches);
-    console.log(` dx/dy (${dx}, ${dy})`);
+    setTouches(nextTouches);
+
+    // ???? update l c h via cursor movement
+    console.log(` ${(100 * dx).toFixed(3)},  ${(100 * dy).toFixed(3)}`);
   }
 
   const renderEditor = () => {
     const style1 = {}; // borderColor: '#888' };
     const style2 = {}; //  borderColor: '#888' };
-    const style0 = { background: null ?? 'var(--grey2)' };
+    const style0 = { background: display.center ?? 'var(--grey2)' };
 
     return (
       <div className={styles.color2} style={style2}

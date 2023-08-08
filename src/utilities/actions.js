@@ -111,20 +111,21 @@ function updateChildren(children, id, isNew, toFirst) {
 
 export function updateNote(setNotes, parentId, note, toFirst = false) {
   setNotes((lastNotes) => {
-    const parent = lastNotes[parentId];
+    const pid = parentId !== note.id ? parentId : note.parentId;
+    const parent = lastNotes[pid];
     const isNew = parent.children.findIndex((id) => id === note.id) === -1;
     const children = updateChildren(parent.children, note.id, isNew, toFirst);
 
     return {
       ...lastNotes,
-      [parentId]: {
+      [pid]: {
         ...parent,
         children,
       },
       [note.id]: {
         ...note,
         at: Date.now(),
-        parentId,
+        parentId: pid,
       },
     };
   });

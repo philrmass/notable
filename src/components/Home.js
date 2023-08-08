@@ -49,6 +49,7 @@ const defaultNotes = {
 
 // ??? color hcl editor, save array as json
 // ??? make a menu modal component, message, options { label, fcn }
+// ??? move modal & color to utilities
 // ??? scroll to new note
 // ??? save and restore scroll y by parentId
 export default function Home() {

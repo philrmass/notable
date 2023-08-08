@@ -11,38 +11,38 @@ export function getTouches(e) {
   }));
 }
 
-export function getMovePercentages(lastTouches, touches) {
-  const dx = 0;
-  const dy = 0;
-
-  return { dx, dy };
-}
-
-/*
-function getMoveX(lasts, nows) {
-  const w = nows[0].w;
-  const diffs = getDiffs(lasts, nows);
-  const dx = getAverage(diffs);
-
-  return (dx / w);
-}
-
-function getDiffs(lasts, nows) {
-  return nows.reduce((diffs, now) => {
-    const match = lasts.find((last) => last.id === now.id);
+function getDiffs(lastTouches, touches) {
+  return touches.reduce((diffs, touch) => {
+    const match = lastTouches.find((last) => last.id === touch.id);
     if (match) {
-      const diff = now.x - match.x;
-      return [...diffs, diff];
+      const x = touch.x - match.x;
+      const y = touch.y - match.y;
+
+      return [...diffs, { x, y }];
     }
     return diffs;
   }, []);
 }
 
-function getAverage(diffs) {
+function getAverages(diffs) {
+  const init = { x: 0, y: 0 };
+
   if (diffs.length > 0) {
-    const sum = diffs.reduce((sum, diff) => sum + diff, 0);
-    return sum / diffs.length;
+    return diffs.reduce((sum, { x, y }) => ({
+      x: sum.x + x,
+      y: sum.y + y,
+    }), init);
   }
-  return 0;
+  return init;
 }
-*/
+
+export function getMovePercentages(lastTouches, touches) {
+  const w = touches[0].w;
+  const h = touches[0].h;
+  const diffs = getDiffs(lastTouches, touches);
+  const { x, y } = getAverages(diffs);
+  const dx = x / w;
+  const dy = y / h;
+
+  return { dx, dy };
+}
