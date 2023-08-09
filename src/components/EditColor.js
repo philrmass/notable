@@ -10,14 +10,14 @@ import { getMovePercentages, getTouches } from '../utilities/touch';
 import Colors from './Colors';
 import styles from './EditColor.module.css';
 
+// ??? fix display colors
 // ??? add clickable axes, click switches to other possible
+// ??? save color to local storage
+// ??? cancel back to start index color
+// ??? export colors to json file
 function getAxis(lchKey, moveKey) {
   const sign = { dx: 1, dy: -1 };
-  const mults = {
-    l: 10,
-    c: 20,
-    h: 40,
-  };
+  const mults = { l: 10, c: 20, h: 40 };
   const mult = sign[moveKey] * mults[lchKey];
 
   return { lchKey, moveKey, mult };
@@ -89,10 +89,6 @@ export default function EditColor() {
     setIndex(index);
   };
 
-  const handleMouseMove = (e) => {
-    console.log('move', e);
-  };
-
   const handleSave = () => {
     console.log('save', index);
   };
@@ -110,10 +106,14 @@ export default function EditColor() {
   };
 
   function handleStart(e) {
+    e.preventDefault();
+
     setTouches(getTouches(e));
   }
 
   function handleMove(e) {
+    e.preventDefault();
+
     const nextTouches = getTouches(e);
     const move = getMovePercentages(touches, nextTouches);
     setTouches(nextTouches);
@@ -136,7 +136,6 @@ export default function EditColor() {
 
     return (
       <div className={styles.color2} style={style2}
-        onMouseMove={(e) => handleMouseMove(e)}
         onTouchStart={handleStart}
         onTouchMove={handleMove}
       >
