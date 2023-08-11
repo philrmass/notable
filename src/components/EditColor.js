@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { route } from 'preact-router';
-// import { useLocalStorage } from 'utilities/hooks';
+import { useLocalStorage } from 'utilities/hooks';
 import {
   applyLchLimits,
   parseLch,
@@ -10,12 +10,9 @@ import { getMoveRatios, getTouches } from 'utilities/touch';
 import Colors from './Colors';
 import styles from './EditColor.module.css';
 
-// ??? save color to local storage
-// ??? cancel back to start index color
-// ??? export colors to json file
 function getAxis(lchKey, moveKey) {
   const sign = { x: 1, y: -1 };
-  const mults = { l: 10, c: 20, h: -40 };
+  const mults = { l: 10, c: 20, h: 40 };
   const mult = sign[moveKey] * mults[lchKey];
 
   return { lchKey, moveKey, mult };
@@ -72,7 +69,7 @@ function getDisplayColors(lch, xAxis, yAxis) {
 }
 
 export default function EditColor() {
-  // const [_, setColors] = useLocalStorage('nColors', []);
+  const [colors, setColors] = useLocalStorage('nColors', []);
   const [index, setIndex] = useState(null);
   const [touches, setTouches] = useState([]);
   const [lch, setLch] = useState({ l: 70, c: 0, h: 0 });
@@ -90,15 +87,18 @@ export default function EditColor() {
   };
 
   const handleSave = () => {
-    console.log('save', index);
+    // ??? save color to local storage
+    console.log('save', index, lch);
   };
 
   const handleCancel = () => {
-    console.log('cancel');
+    // ??? cancel back to start index color
+    console.log('cancel', colors[index]);
   };
 
   const handleExport = () => {
-    console.log('export');
+    // ??? export colors to json file
+    console.log('export', colors);
   };
 
   const handleExit = () => {
@@ -131,7 +131,8 @@ export default function EditColor() {
       const lchKey = Object.keys(names).find((key) => (
         key !== axis.lchKey && key !== otherAxis.lchKey
       ));
-      onAxisChange({ ...axis, lchKey });
+
+      onAxisChange(getAxis(lchKey, axis.moveKey));
     };
 
     return (
