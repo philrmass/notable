@@ -6,18 +6,17 @@ import {
   parseLch,
   toLchStr,
 } from '../utilities/color';
-import { getMovePercentages, getTouches } from '../utilities/touch';
+import { getMoveRatios, getTouches } from 'utilities/touch';
 import Colors from './Colors';
 import styles from './EditColor.module.css';
 
-// ??? fix display colors
 // ??? add clickable axes, click switches to other possible
 // ??? save color to local storage
 // ??? cancel back to start index color
 // ??? export colors to json file
 function getAxis(lchKey, moveKey) {
-  const sign = { dx: 1, dy: -1 };
-  const mults = { l: 10, c: 20, h: 40 };
+  const sign = { x: 1, y: -1 };
+  const mults = { l: 10, c: 20, h: -40 };
   const mult = sign[moveKey] * mults[lchKey];
 
   return { lchKey, moveKey, mult };
@@ -41,34 +40,36 @@ function adjustColor(lch, move, xAxis, yAxis) {
   return applyLchLimits(lchY);
 }
 
-// ???? redo
 function getDisplayColors(lch, xAxis, yAxis) {
-  const d = 0.2;
-  const d0 = d;
-  const d1 = 2 * d;
-  const d2 = 3 * d;
-  const move0 = { dx: d0, dy: -d0 };
-  const move1 = { dx: d1, dy: -d1 };
-  const move2 = { dx: d2, dy: -d2 };
-  const move_0 = { dx: -d0, dy: d0 };
-  const move_1 = { dx: -d1, dy: d1 };
-  const move_2 = { dx: -d2, dy: d2 };
+  const deltaBase = 0.2;
+  const indicies = [0, 1, 2];
+  const signs = [1, -1];
+  const axes = [xAxis, yAxis];
 
-  const center = toLchStr(lch);
-  const x0 = toLchStr(adjustAxisColor(lch, move0, xAxis));
-  const y0 = toLchStr(adjustAxisColor(lch, move0, yAxis));
-  const x1 = toLchStr(adjustAxisColor(lch, move1, xAxis));
-  const y1 = toLchStr(adjustAxisColor(lch, move1, yAxis));
-  const x2 = toLchStr(adjustAxisColor(lch, move2, xAxis));
-  const y2 = toLchStr(adjustAxisColor(lch, move2, yAxis));
-  const x_0 = toLchStr(adjustAxisColor(lch, move_0, xAxis));
-  const y_0 = toLchStr(adjustAxisColor(lch, move_0, yAxis));
-  const x_1 = toLchStr(adjustAxisColor(lch, move_1, xAxis));
-  const y_1 = toLchStr(adjustAxisColor(lch, move_1, yAxis));
-  const x_2 = toLchStr(adjustAxisColor(lch, move_2, xAxis));
-  const y_2 = toLchStr(adjustAxisColor(lch, move_2, yAxis));
+  const center = ['center', toLchStr(lch)];
+  const entries = indicies.reduce((all0, index) => {
+    const delta = (index + 1) * deltaBase;
 
-  return { center, x0, y0, x1, y1, x2, y2, x_0, y_0, x_1, y_1, x_2, y_2 };
+    const entries0 = signs.reduce((all1, sign) => {
+      const move = {
+        x: sign * delta,
+        y: sign * -delta,
+      };
+
+      const entries1 = axes.map((axis) => {
+        const key = `${axis.moveKey}${sign === -1 ? '_' : ''}${index}`;
+        const value = toLchStr(adjustAxisColor(lch, move, axis));
+
+        return [key, value];
+      });
+
+      return [...all1, ...entries1];
+    }, []);
+
+    return [...all0, ...entries0]; 
+  }, [center]);
+
+  return Object.fromEntries(entries);
 }
 
 export default function EditColor() {
@@ -77,8 +78,8 @@ export default function EditColor() {
   const [touches, setTouches] = useState([]);
   const [lch, setLch] = useState({ l: 70, c: 0, h: 0 });
   const [display, setDisplay] = useState({});
-  const [xAxis, _setXAxis] = useState(getAxis('h', 'dx'));
-  const [yAxis, _setYAxis] = useState(getAxis('l', 'dy'));
+  const [xAxis, _setXAxis] = useState(getAxis('h', 'x'));
+  const [yAxis, _setYAxis] = useState(getAxis('l', 'y'));
 
   useEffect(() => {
     setDisplay(getDisplayColors(lch, xAxis, yAxis));
@@ -115,7 +116,7 @@ export default function EditColor() {
     e.preventDefault();
 
     const nextTouches = getTouches(e);
-    const move = getMovePercentages(touches, nextTouches);
+    const move = getMoveRatios(touches, nextTouches);
     setTouches(nextTouches);
     setLch(adjustColor(lch, move, xAxis, yAxis));
   }
