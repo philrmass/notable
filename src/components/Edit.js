@@ -19,6 +19,7 @@ function getDefaultNote(id, parentId, color) {
 }
 
 export default function Edit({
+  colors,
   id,
   notes,
   parentId,
@@ -80,7 +81,8 @@ export default function Edit({
       />
       <div className={styles.colors}>
         <Colors
-          color={color}
+          colors={colors}
+          selected={color}
           onSelect={handleColorChange}
         />
       </div>

@@ -40,6 +40,17 @@ const icons = [
   'up',
 ];
 
+export const defaultColors = [
+  'lch(80 50 0deg)',
+  'lch(80 50 45deg)',
+  'lch(80 50 90deg)',
+  'lch(80 50 135deg)',
+  'lch(77 10 270deg)',
+  'lch(73 20 30deg)',
+  'lch(80 50 315deg)',
+  'lch(80 50 270deg)',
+];
+
 const defaultNotes = {
   root: {
     children: [],
@@ -47,15 +58,14 @@ const defaultNotes = {
   },
 };
 
-// ??? color hcl editor, save array as json
 // ??? make a menu modal component, message, options { label, fcn }
-// ??? move modal & color to utilities
 // ??? scroll to new note
 // ??? save and restore scroll y by parentId
 export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
+  const [colors, setColors] = useLocalStorage('nColors', defaultColors);
   const [message, setMessage] = useState('');
   const [topMenuShown, setTopMenuShown] = useState(false);
   const [monthlySaveShown, setMonthlySaveShown] = useState(false);
@@ -142,6 +152,10 @@ export default function Home() {
     }
   };
 
+  const resetColors = () => {
+    console.log('resetColors'); 
+  };
+
   const saveNote = (note, toFirst) => {
     checkMonthlySave();
     updateNote(setNotes, note.parentId, note, toFirst);
@@ -171,9 +185,13 @@ export default function Home() {
       >
         <EditColor
           path="/colors"
+          colors={colors}
+          resetColors={resetColors}
+          setColors={setColors}
         />
         <Edit
           path="/notes/:id/edit"
+          colors={colors}
           notes={notes}
           parentId={parentId}
           saveNote={saveNote}

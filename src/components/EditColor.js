@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'preact/hooks';
 import { route } from 'preact-router';
-import { useLocalStorage } from 'utilities/hooks';
 import {
   applyLchLimits,
   parseLch,
   toLchStr,
 } from '../utilities/color';
 import { getMoveRatios, getTouches } from 'utilities/touch';
-import Colors, { defaultColors } from './Colors';
+import Colors from './Colors';
 import styles from './EditColor.module.css';
 
 function getAxis(lchKey, moveKey) {
@@ -68,9 +67,11 @@ function getDisplayColors(lch, xAxis, yAxis) {
   return Object.fromEntries(entries);
 }
 
-// ??? add import and reset
-export default function EditColor() {
-  const [colors, setColors] = useLocalStorage('nColors', defaultColors);
+export default function EditColor({
+  colors,
+  resetColors,
+  setColors,
+}) {
   const [index, setIndex] = useState(null);
   const [touches, setTouches] = useState([]);
   const [lch, setLch] = useState({ l: 70, c: 0, h: 0 });
@@ -88,20 +89,23 @@ export default function EditColor() {
   };
 
   const handleSave = () => {
-    const before = colors.slice(0, index);
-    const after = colors.slice(index + 1);
+    // const before = colors.slice(0, index);
+    // const after = colors.slice(index + 1);
 
     // ??? set Colors in Color component
-    setColors([...before, toLchStr(lch, 4), ...after]);
+    // setColors([...before, toLchStr(lch, 4), ...after]);
+    console.log('save', typeof setColors);
   };
 
   const handleCancel = () => {
-    setLch(parseLch(colors[index])); 
+    // ???
+    console.log('cancel', index);
+    // setLch(parseLch(colors[index])); 
   };
 
   const handleExport = () => {
     // ??? export colors to json file
-    console.log('export', colors);
+    // console.log('export', colors);
   };
 
   const handleExit = () => {
@@ -115,7 +119,7 @@ export default function EditColor() {
 
   const handleReset = () => {
     // ??? reset colors from defaultColors
-    console.log('reset');
+    console.log('reset', typeof resetColors);
   };
 
   const handleStart = (e) => {
@@ -209,7 +213,7 @@ export default function EditColor() {
     <div className={styles.main}>
       <div className={styles.colors}>
         <Colors
-          color={null}
+          colors={colors}
           onSelect={handleColorSelect}
         />
       </div>

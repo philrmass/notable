@@ -10,6 +10,7 @@
 }
 
 .colors {
+  flex-shrink: 0;
   height: calc(2 * var(--note-height));
   margin: var(--gap2) 0;
 }
