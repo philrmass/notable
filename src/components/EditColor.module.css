@@ -14,6 +14,28 @@
   margin: var(--gap2) 0;
 }
 
+.editor {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.axis {
+  border: var(--gap0) solid var(--bg);
+  padding: var(--gap0);
+  background: var(--bg-alt);
+  color: var(--white);
+}
+
+.corner {
+  background: var(--bg-alt);
+  border-bottom: var(--gap0) solid var(--bg);
+  border-left: var(--gap0) solid var(--bg);
+}
+
+.y {
+  writing-mode: vertical-rl;
+}
+
 .color2 {
   flex-grow: 1;
   display: flex;

@@ -10,7 +10,6 @@ import { getMoveRatios, getTouches } from 'utilities/touch';
 import Colors from './Colors';
 import styles from './EditColor.module.css';
 
-// ??? add clickable axes, click switches to other possible
 // ??? save color to local storage
 // ??? cancel back to start index color
 // ??? export colors to json file
@@ -78,8 +77,8 @@ export default function EditColor() {
   const [touches, setTouches] = useState([]);
   const [lch, setLch] = useState({ l: 70, c: 0, h: 0 });
   const [display, setDisplay] = useState({});
-  const [xAxis, _setXAxis] = useState(getAxis('h', 'x'));
-  const [yAxis, _setYAxis] = useState(getAxis('l', 'y'));
+  const [xAxis, setXAxis] = useState(getAxis('h', 'x'));
+  const [yAxis, setYAxis] = useState(getAxis('l', 'y'));
 
   useEffect(() => {
     setDisplay(getDisplayColors(lch, xAxis, yAxis));
@@ -121,6 +120,31 @@ export default function EditColor() {
     setLch(adjustColor(lch, move, xAxis, yAxis));
   }
 
+  const renderAxis = (axis, otherAxis, onAxisChange) => {
+    const names = {
+      h: 'Hue',
+      c: 'Chroma',
+      l: 'Lightness',
+    };
+
+    const handleClick = () => {
+      const lchKey = Object.keys(names).find((key) => (
+        key !== axis.lchKey && key !== otherAxis.lchKey
+      ));
+      onAxisChange({ ...axis, lchKey });
+    };
+
+    return (
+      <button
+        type="button"
+        className={`${styles.axis} ${styles[axis.moveKey]}`}
+        onClick={handleClick}
+      >
+        {`${names[axis.lchKey]} (${axis.lchKey}) (${axis.moveKey})`}
+      </button>
+    );
+  };
+
   const renderEditor = () => {
     const styleCenter = {
       background: display.center,
@@ -136,22 +160,27 @@ export default function EditColor() {
     };
 
     return (
-      <div className={styles.color2} style={style2}
-        onTouchStart={handleStart}
-        onTouchMove={handleMove}
-      >
-        <div className={styles.color1} style={style1}>
-          <div className={styles.color0} style={style0}>
-            <div className={styles.center} style={styleCenter}>
-              <div className={styles.shadow}>
-                { toLchStr(lch, 1) }
-                <div className={styles.value}>
+      <div className={styles.editor}>
+        { renderAxis(yAxis, xAxis, (axis) => setYAxis(axis)) }
+        <div className={styles.color2} style={style2}
+          onTouchStart={handleStart}
+          onTouchMove={handleMove}
+        >
+          <div className={styles.color1} style={style1}>
+            <div className={styles.color0} style={style0}>
+              <div className={styles.center} style={styleCenter}>
+                <div className={styles.shadow}>
                   { toLchStr(lch, 1) }
+                  <div className={styles.value}>
+                    { toLchStr(lch, 1) }
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div className={styles.corner} />
+        { renderAxis(xAxis, yAxis, (axis) => setXAxis(axis)) }
       </div>
     );
   };
