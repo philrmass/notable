@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { useLocalStorage } from 'utilities/hooks';
 import styles from './Colors.module.css';
 
-const defaultColors = [
+export const defaultColors = [
   'lch(80 50 0deg)',
   'lch(80 50 45deg)',
   'lch(80 50 90deg)',

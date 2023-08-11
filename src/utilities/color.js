@@ -1,5 +1,5 @@
 export function parseLch(str) {
-  const exp = /lch\((.*)%?\s+(.*)\s+(.*)deg?\)/;
+  const exp = /lch\((.*)\s+(.*)\s+(.*)\)/;
   const parts = str.match(exp);
   const l = parseFloat(parts[1]);
   const c = parseFloat(parts[2]);

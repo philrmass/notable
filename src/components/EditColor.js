@@ -7,7 +7,7 @@ import {
   toLchStr,
 } from '../utilities/color';
 import { getMoveRatios, getTouches } from 'utilities/touch';
-import Colors from './Colors';
+import Colors, { defaultColors } from './Colors';
 import styles from './EditColor.module.css';
 
 function getAxis(lchKey, moveKey) {
@@ -68,8 +68,9 @@ function getDisplayColors(lch, xAxis, yAxis) {
   return Object.fromEntries(entries);
 }
 
+// ??? add import and reset
 export default function EditColor() {
-  const [colors, setColors] = useLocalStorage('nColors', []);
+  const [colors, setColors] = useLocalStorage('nColors', defaultColors);
   const [index, setIndex] = useState(null);
   const [touches, setTouches] = useState([]);
   const [lch, setLch] = useState({ l: 70, c: 0, h: 0 });
@@ -87,13 +88,15 @@ export default function EditColor() {
   };
 
   const handleSave = () => {
-    // ??? save color to local storage
-    console.log('save', index, lch);
+    const before = colors.slice(0, index);
+    const after = colors.slice(index + 1);
+
+    // ??? set Colors in Color component
+    setColors([...before, toLchStr(lch, 4), ...after]);
   };
 
   const handleCancel = () => {
-    // ??? cancel back to start index color
-    console.log('cancel', colors[index]);
+    setLch(parseLch(colors[index])); 
   };
 
   const handleExport = () => {
@@ -105,20 +108,30 @@ export default function EditColor() {
     route('/notes/root');
   };
 
-  function handleStart(e) {
+  const handleImport = () => {
+    // ??? import colors from json file
+    console.log('import');
+  };
+
+  const handleReset = () => {
+    // ??? reset colors from defaultColors
+    console.log('reset');
+  };
+
+  const handleStart = (e) => {
     e.preventDefault();
 
     setTouches(getTouches(e));
-  }
+  };
 
-  function handleMove(e) {
+  const handleMove = (e) => {
     e.preventDefault();
 
     const nextTouches = getTouches(e);
     const move = getMoveRatios(touches, nextTouches);
     setTouches(nextTouches);
     setLch(adjustColor(lch, move, xAxis, yAxis));
-  }
+  };
 
   const renderAxis = (axis, otherAxis, onAxisChange) => {
     const names = {
@@ -145,6 +158,12 @@ export default function EditColor() {
       </button>
     );
   };
+
+  const renderButton = (label, handler) => (
+    <button className="button" onClick={handler}>
+      { label }
+    </button>
+  );
 
   const renderEditor = () => {
     const styleCenter = {
@@ -196,30 +215,12 @@ export default function EditColor() {
       </div>
       { renderEditor() }
       <div className={styles.buttons}>
-        <button
-          className="button"
-          onClick={handleSave}
-        >
-          Save
-        </button>
-        <button
-          className="button"
-          onClick={handleCancel}
-        >
-          Cancel
-        </button>
-        <button
-          className="button"
-          onClick={handleExport}
-        >
-          Export
-        </button>
-        <button
-          className="button"
-          onClick={handleExit}
-        >
-          Exit
-        </button>
+        { renderButton('Save', handleSave) }
+        { renderButton('Cancel', handleCancel) }
+        { renderButton('Reset', handleReset) }
+        { renderButton('Import', handleImport) }
+        { renderButton('Export', handleExport) }
+        { renderButton('Exit', handleExit) }
       </div>
     </div>
   );
