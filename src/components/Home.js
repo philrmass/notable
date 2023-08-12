@@ -153,7 +153,7 @@ export default function Home() {
   };
 
   const resetColors = () => {
-    console.log('resetColors'); 
+    setColors(defaultColors);
   };
 
   const saveNote = (note, toFirst) => {

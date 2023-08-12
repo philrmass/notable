@@ -2,9 +2,11 @@ import { useEffect, useState } from 'preact/hooks';
 import { route } from 'preact-router';
 import {
   applyLchLimits,
+  getSaveFilePath,
   parseLch,
   toLchStr,
 } from '../utilities/color';
+import { loadJsonFile, saveJsonFile } from 'utilities/file';
 import { getMoveRatios, getTouches } from 'utilities/touch';
 import Colors from './Colors';
 import styles from './EditColor.module.css';
@@ -89,37 +91,27 @@ export default function EditColor({
   };
 
   const handleSave = () => {
-    // const before = colors.slice(0, index);
-    // const after = colors.slice(index + 1);
+    const before = colors.slice(0, index);
+    const after = colors.slice(index + 1);
 
-    // ??? set Colors in Color component
-    // setColors([...before, toLchStr(lch, 4), ...after]);
-    console.log('save', typeof setColors);
+    setColors([...before, toLchStr(lch, 4), ...after]);
   };
 
   const handleCancel = () => {
-    // ???
-    console.log('cancel', index);
-    // setLch(parseLch(colors[index])); 
+    setLch(parseLch(colors[index])); 
   };
 
   const handleExport = () => {
-    // ??? export colors to json file
-    // console.log('export', colors);
+    saveJsonFile(getSaveFilePath(), colors);
   };
 
   const handleExit = () => {
     route('/notes/root');
   };
 
-  const handleImport = () => {
-    // ??? import colors from json file
-    console.log('import');
-  };
-
-  const handleReset = () => {
-    // ??? reset colors from defaultColors
-    console.log('reset', typeof resetColors);
+  const handleImport = async () => {
+    const data = await loadJsonFile();
+    setColors(data);
   };
 
   const handleStart = (e) => {
@@ -221,7 +213,7 @@ export default function EditColor({
       <div className={styles.buttons}>
         { renderButton('Save', handleSave) }
         { renderButton('Cancel', handleCancel) }
-        { renderButton('Reset', handleReset) }
+        { renderButton('Reset', resetColors) }
         { renderButton('Import', handleImport) }
         { renderButton('Export', handleExport) }
         { renderButton('Exit', handleExit) }

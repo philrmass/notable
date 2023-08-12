@@ -1,3 +1,12 @@
+export function getSaveFilePath(at = Date.now()) {
+  const when = new Date(at);
+  const year = when.getFullYear();
+  const month = `${when.getMonth() + 1}`.padStart(2, '0');
+  const date = `${when.getDate()}`.padStart(2, '0');
+
+  return `colors_${year}_${month}_${date}.json`;
+}
+
 export function parseLch(str) {
   const exp = /lch\((.*)\s+(.*)\s+(.*)\)/;
   const parts = str.match(exp);
