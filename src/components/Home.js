@@ -58,9 +58,11 @@ const defaultNotes = {
   },
 };
 
-// ??? make a menu modal component, message, options { label, fcn }
+// ??? edit arrows: up, down => true, false, null
 // ??? scroll to new note
 // ??? save and restore scroll y by parentId
+// ??? scroll list when drag-hovering at the end
+// ??? button to restore deleted singles
 export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
