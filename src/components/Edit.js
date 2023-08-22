@@ -28,7 +28,7 @@ export default function Edit({
   const defaultColor = 'var(--note-default)';
   const [lastColor, setLastColor] = useLocalStorage('nLastColor', defaultColor);
   const [note, setNote] = useState(notes[id]);
-  const [toFirst, setToFirst] = useState(false);
+  const [toFirst, setToFirst] = useState();
 
   useEffect(() => {
     const existing = notes[id];
@@ -72,6 +72,14 @@ export default function Edit({
   const isComplete = Boolean(text);
   const noteStyles = { background: color };
   const textClasses = classnames('text', styles.text);
+  const upClasses = classnames(
+    'icon-button', 
+    { 'button-highlighted': toFirst === true },
+  );
+  const downClasses = classnames(
+    'icon-button', 
+    { 'button-highlighted': toFirst === false },
+  );
 
   return (
     <div className={styles.main}>
@@ -89,15 +97,13 @@ export default function Edit({
       <div style={noteStyles} className="note">
         <div className="controls">
           <button
-            disabled={toFirst}
-            className="icon-button"
+            className={upClasses}
             onClick={() => setToFirst(true)}
           >
             <Icon name="caretUp" className="icon" />
           </button>
           <button
-            disabled={!toFirst}
-            className="icon-button"
+            className={downClasses}
             onClick={() => setToFirst(false)}
           >
             <Icon name="caretDown" className="icon" />

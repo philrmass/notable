@@ -81,12 +81,17 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid transparent;
   border-radius: 50%;
 }
 
 .icon-button:disabled {
   background: var(--button-disabled);
   color: var(--button-disabled-text);
+}
+
+.button-highlighted {
+  border-color: var(--button-disabled-text);
 }
 
 .icon {

@@ -101,20 +101,30 @@ export function moveChildUp(setNotes, parentId, id) {
   });
 }
 
-function updateChildren(children, id, isNew, toFirst) {
-  if (!isNew) {
+function updateChildren(children, id, index, toFirst) {
+  const isExisting = index !== -1;
+  const isMoved = typeof toFirst === 'boolean';
+
+  if (isExisting) {
+    if (isMoved) {
+      const start = children.slice(0, index);
+      const end = children.slice(index + 1);
+
+      return (toFirst ? [id, ...start, ...end] : [...start, ...end, id]);
+    }
+
     return children;
   }
 
   return (toFirst ? [id, ...children] : [...children, id]);
 }
 
-export function updateNote(setNotes, parentId, note, toFirst = false) {
+export function updateNote(setNotes, parentId, note, toFirst) {
   setNotes((lastNotes) => {
     const pid = parentId !== note.id ? parentId : note.parentId;
     const parent = lastNotes[pid];
-    const isNew = parent.children.findIndex((id) => id === note.id) === -1;
-    const children = updateChildren(parent.children, note.id, isNew, toFirst);
+    const index = parent.children.findIndex((id) => id === note.id);
+    const children = updateChildren(parent.children, note.id, index, toFirst);
 
     return {
       ...lastNotes,
