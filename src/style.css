@@ -22,7 +22,7 @@ html, body {
   background: white;
 }
 
-.note + .note {
+.wrap + .wrap {
   margin-top:  var(--note-gap);
 }
 

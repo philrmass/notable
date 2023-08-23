@@ -58,9 +58,8 @@ const defaultNotes = {
   },
 };
 
-// ??? scroll to new note
-// ??? scroll list when drag-hovering at the end
 // ??? button to restore deleted singles
+// ??? scroll list when drag-hovering at the end
 export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
@@ -72,6 +71,7 @@ export default function Home() {
   const [menuId, setMenuId] = useState(null);
   const [moveDownId, setMoveDownId] = useState(null);
   const [confirmDeleteIds, setConfirmDeleteIds] = useState([]);
+  const [scrollId, setScrollId] = useState();
   const hasParent = parentId !== rootName;
 
   const addNote = () => {
@@ -156,7 +156,8 @@ export default function Home() {
     setColors(defaultColors);
   };
 
-  const saveNote = (note, toFirst) => {
+  const saveNote = (note, toFirst, sid) => {
+    setScrollId(sid);
     checkMonthlySave();
     updateNote(setNotes, parentId, note, toFirst);
   };
@@ -199,7 +200,9 @@ export default function Home() {
         <Notes
           path="/notes/:id"
           notes={notes}
+          scrollId={scrollId}
           addNote={addNote}
+          clearScrollId={() => setScrollId(null)}
           deleteNote={deleteNote} 
           goUp={goUp}
           moveNote={moveNote}

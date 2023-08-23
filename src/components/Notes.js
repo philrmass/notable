@@ -9,7 +9,9 @@ import styles from './Notes.module.css';
 export default function Notes({
   id,
   notes,
+  scrollId,
   addNote,
+  clearScrollId,
   deleteNote,
   goUp,
   moveNote,
@@ -21,6 +23,11 @@ export default function Notes({
   const hasParent = Boolean(note.parentId);
   const contentRef = useRef();
   const [scrolls, setScrolls] = useLocalStorage('nScrolls', {});
+
+  const scrollIntoView = (ref) => {
+    setTimeout(() => ref.scrollIntoView(), 0);
+    clearScrollId();
+  };
 
   useEffect(() => {
     contentRef.current.scrollTop = scrolls[id];
@@ -40,27 +47,31 @@ export default function Notes({
   }
 
   return (
-    <>
-      <div className={styles.main}>
-        { note.text && (
-          <div className={styles.parent}>
-            <Note
-              key={note.id}
-              {...note}
-              isParent={true}
-              deleteNote={deleteNote} 
-              moveNote={moveNote}
-              openMenu={openMenu} 
-            />
-          </div>
-        )}
-        <div
-          ref={contentRef}
-          className={styles.content}
-          onScroll={handleScroll}
-        >
-          <div className={styles.notes}>
-            { children.map((child) => (
+    <div className={styles.main}>
+      { note.text && (
+        <div className={styles.parent}>
+          <Note
+            key={note.id}
+            {...note}
+            isParent={true}
+            deleteNote={deleteNote} 
+            moveNote={moveNote}
+            openMenu={openMenu} 
+          />
+        </div>
+      )}
+      <div
+        ref={contentRef}
+        className={styles.content}
+        onScroll={handleScroll}
+      >
+        <div className={styles.notes}>
+          { children.map((child) => (
+            <div
+              key={child.id}
+              ref={child.id === scrollId && scrollIntoView}
+              className="wrap"
+            >
               <Note
                 key={child.id}
                 {...child}
@@ -68,49 +79,49 @@ export default function Notes({
                 moveNote={moveNote}
                 openMenu={openMenu} 
               />
-            )) }
-          </div>
-        </div>
-        <div className={styles.footer}>
-          { !hasParent && (
-            <button
-              className="icon-button"
-              onClick={() => showTopMenu()}
-            >
-              <Icon name="menu" className="icon" />
-            </button>
-          ) }
-          { hasParent && (
-            <button
-              className="icon-button"
-              disabled={!hasParent}
-              onClick={() => goUp()}
-            >
-              <Icon name="up" className="icon" />
-            </button>
-          ) }
-          <Link href="/notes/root">
-            <div className={styles.link}>
-              <img
-                src="./assets/icon.png"
-                className={styles.icon}
-              />
-              <div className={styles.name}>
-                Notable
-                <div className={styles.version}>
-                  {`v${version}`}
-                </div>
-              </div>
             </div>
-          </Link>
-          <button
-            className="icon-button"
-            onClick={() => addNote()}
-          >
-            <Icon name="plus" className="icon" />
-          </button>
+          )) }
         </div>
       </div>
-    </>
+      <div className={styles.footer}>
+        { !hasParent && (
+          <button
+            className="icon-button"
+            onClick={() => showTopMenu()}
+          >
+            <Icon name="menu" className="icon" />
+          </button>
+        ) }
+        { hasParent && (
+          <button
+            className="icon-button"
+            disabled={!hasParent}
+            onClick={() => goUp()}
+          >
+            <Icon name="up" className="icon" />
+          </button>
+        ) }
+        <Link href="/notes/root">
+          <div className={styles.link}>
+            <img
+              src="./assets/icon.png"
+              className={styles.icon}
+            />
+            <div className={styles.name}>
+              Notable
+              <div className={styles.version}>
+                {`v${version}`}
+              </div>
+            </div>
+          </div>
+        </Link>
+        <button
+          className="icon-button"
+          onClick={() => addNote()}
+        >
+          <Icon name="plus" className="icon" />
+        </button>
+      </div>
+    </div>
   );
 }

@@ -42,7 +42,7 @@ export default function Note({
 
   return (
     <div
-      ref={drop}
+      ref={!isParent && drop}
       style={noteStyles}
       className={noteClasses}
     >
@@ -72,7 +72,7 @@ export default function Note({
           </div>
         </Link>
       </div>
-      <div ref={drag} className="handle">
+      <div ref={!isParent && drag} className="handle">
         <Handle />
       </div>
     </div>

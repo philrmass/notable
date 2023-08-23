@@ -29,6 +29,7 @@ export default function Edit({
   const [lastColor, setLastColor] = useLocalStorage('nLastColor', defaultColor);
   const [note, setNote] = useState(notes[id]);
   const [toFirst, setToFirst] = useState();
+  const [scrollId, setScrollId] = useState();
 
   useEffect(() => {
     const existing = notes[id];
@@ -44,6 +45,7 @@ export default function Edit({
       const color = parentColor ?? lastColor;
 
       setNote(getDefaultNote(id, parentId, color));
+      setScrollId(id);
     }
   }, [notes, parentId, id, note, lastColor]);
 
@@ -62,8 +64,11 @@ export default function Edit({
   };
 
   const handleSave = () => {
+    const hasToFirst = typeof toFirst === 'boolean';
+    const sid = scrollId ?? (hasToFirst && note.id);
+
     setNote(null);
-    saveNote(note, toFirst);
+    saveNote(note, toFirst, sid);
     close();
   };
 
