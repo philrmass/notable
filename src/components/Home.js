@@ -58,9 +58,7 @@ const defaultNotes = {
   },
 };
 
-// ??? edit arrows: up, down => true, false, null
 // ??? scroll to new note
-// ??? save and restore scroll y by parentId
 // ??? scroll list when drag-hovering at the end
 // ??? button to restore deleted singles
 export default function Home() {
@@ -160,7 +158,7 @@ export default function Home() {
 
   const saveNote = (note, toFirst) => {
     checkMonthlySave();
-    updateNote(setNotes, note.parentId, note, toFirst);
+    updateNote(setNotes, parentId, note, toFirst);
   };
 
   const checkMonthlySave = () => {

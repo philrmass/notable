@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'preact/hooks';
 import { Link, route } from 'preact-router';
+import { useLocalStorage } from 'utilities/hooks';
 import Icon from 'utilities/Icon';
 import Note from './Note';
 import { version } from '../../package.json';
@@ -17,6 +19,21 @@ export default function Notes({
   const note = notes[id];
   const children = note.children.map((id) => notes[id]);
   const hasParent = Boolean(note.parentId);
+  const contentRef = useRef();
+  const [scrolls, setScrolls] = useLocalStorage('nScrolls', {});
+
+  useEffect(() => {
+    contentRef.current.scrollTop = scrolls[id];
+  }, [id]); // eslint-disable-line
+
+  const handleScroll = (e) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    
+    setScrolls((value) => ({
+      ...value,
+      [id]: scrollTop,
+    }));
+  };
 
   if (!note) {
     route('/notes/root', true);
@@ -37,7 +54,11 @@ export default function Notes({
             />
           </div>
         )}
-        <div className={styles.content}>
+        <div
+          ref={contentRef}
+          className={styles.content}
+          onScroll={handleScroll}
+        >
           <div className={styles.notes}>
             { children.map((child) => (
               <Note
