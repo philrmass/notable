@@ -145,13 +145,12 @@ export default function EditColor({
     };
 
     return (
-      <button
-        type="button"
+      <div
         className={`${styles.axis} ${styles[axis.moveKey]}`}
         onClick={handleClick}
       >
-        {`${names[axis.lchKey]} (${axis.lchKey}) (${axis.moveKey})`}
-      </button>
+        {names[axis.lchKey]}
+      </div>
     );
   };
 
