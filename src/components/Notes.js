@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { Link, route } from 'preact-router';
+import { useDndScrolling } from 'react-dnd-scrolling';
 import { useLocalStorage } from 'utilities/hooks';
 import Icon from 'utilities/Icon';
 import Note from './Note';
@@ -23,6 +24,8 @@ export default function Notes({
   const hasParent = Boolean(note.parentId);
   const contentRef = useRef();
   const [scrolls, setScrolls] = useLocalStorage('nScrolls', {});
+
+  useDndScrolling(contentRef);
 
   const scrollIntoView = (ref) => {
     setTimeout(() => ref.scrollIntoView(), 0);

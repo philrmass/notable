@@ -60,7 +60,6 @@ const defaultNotes = {
   },
 };
 
-// ??? scroll list when drag-hovering at the end
 export default function Home() {
   const rootName = 'root';
   const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
