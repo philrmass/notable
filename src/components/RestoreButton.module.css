@@ -1,0 +1,5 @@
+.wrap {
+  position: absolute;
+  right:  var(--gap2);
+  top: var(--gap1);
+}

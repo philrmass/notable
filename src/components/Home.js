@@ -15,6 +15,7 @@ import MonthlySave from './MonthlySave';
 import MoveDownParents from './MoveDownParents';
 import Notes from './Notes';
 import Redirect from './Redirect';
+import RestoreButton from './RestoreButton';
 import TopMenu from './TopMenu';
 import {
   deleteChild,
@@ -37,6 +38,7 @@ const icons = [
   'cross',
   'menu',
   'plus',
+  'revert',
   'up',
 ];
 
@@ -58,7 +60,6 @@ const defaultNotes = {
   },
 };
 
-// ??? button to restore deleted singles
 // ??? scroll list when drag-hovering at the end
 export default function Home() {
   const rootName = 'root';
@@ -72,6 +73,7 @@ export default function Home() {
   const [moveDownId, setMoveDownId] = useState(null);
   const [confirmDeleteIds, setConfirmDeleteIds] = useState([]);
   const [scrollId, setScrollId] = useState();
+  const [deletedNote, setDeletedNote] = useState(null);
   const hasParent = parentId !== rootName;
 
   const addNote = () => {
@@ -86,6 +88,9 @@ export default function Home() {
     setConfirmDeleteIds(ids);
 
     if (ids.length <= 1) {
+      if (confirm) {
+        setDeletedNote({ ...notes[id] });
+      }
       deleteChild(setNotes, parentId, id);
     }
   };
@@ -160,6 +165,12 @@ export default function Home() {
     setScrollId(sid);
     checkMonthlySave();
     updateNote(setNotes, parentId, note, toFirst);
+    setDeletedNote(null);
+  };
+
+  const restoreNote = (note) => {
+    updateNote(setNotes, note.parentId, note, true);
+    setDeletedNote(null);
   };
 
   const checkMonthlySave = () => {
@@ -211,6 +222,10 @@ export default function Home() {
         />
         <Redirect default to="/notes/root" />
       </Router>
+      <RestoreButton 
+        shown={Boolean(deletedNote)}
+        onClick={() => restoreNote(deletedNote)}
+      />
       <Message 
         message={message}
         onClose={() => setMessage('')}
