@@ -11,6 +11,14 @@
   flex-grow: 1;
 }
 
+.link {
+  display: flex;
+  justify-content: center;
+  color: var(--white);
+  font-size: var(--font-size-lg0);
+  text-decoration: none;
+}
+
 .colors {
   height: calc(2 * var(--note-height));
   margin: var(--gap2) 0;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import classnames from 'classnames';
-import { route } from 'preact-router';
+import { Link, route } from 'preact-router';
 import { useLocalStorage } from 'utilities/hooks';
 import Icon from 'utilities/Icon';
 import Colors from './Colors';
@@ -92,6 +92,9 @@ export default function Edit({
         className={styles.top}
         onClick={() => route('/colors')}
       />
+      <Link className={styles.link} href={`/notes/${id}`}>
+        Edit Children
+      </Link>
       <div className={styles.colors}>
         <Colors
           colors={colors}
