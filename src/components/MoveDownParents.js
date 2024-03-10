@@ -10,7 +10,7 @@ export default function MoveDownParents({
   onSelect,
 }) {
   const parent = notes[parentId];
-  const filtered = parent.children.filter((id) => id !== moveDownId);
+  const filtered = parent?.children.filter((id) => id !== moveDownId) ?? [];
 
   const renderNote = (id) => {
     const note = notes[id];
