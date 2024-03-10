@@ -62,7 +62,8 @@ const defaultNotes = {
 
 export default function Home() {
   const rootName = 'root';
-  const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
+  const [notez, setNotez] = useLocalStorage('nNotes', defaultNotes);
+  const [notes, setNotes] = useState([]);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [colors, setColors] = useLocalStorage('nColors', defaultColors);
   const [message, setMessage] = useState('');
@@ -116,10 +117,10 @@ export default function Home() {
       const count = Object.keys(parsed.notes).length;
 
       if (add) {
-        setNotes((last) => addNotes(last, parsed.notes));
+        setNotez((last) => addNotes(last, parsed.notes));
         setMessage(`Added ${count} notes`);
       } else {
-        setNotes(parsed.notes);
+        setNotez(parsed.notes);
         setMessage(`Imported ${count} notes`);
       }
     }
@@ -200,7 +201,6 @@ export default function Home() {
           resetColors={resetColors}
           setColors={setColors}
         />
-        {/*
         <Edit
           path="/notes/:id/edit"
           colors={colors}
@@ -208,7 +208,6 @@ export default function Home() {
           parentId={parentId}
           saveNote={saveNote}
         />
-        */}
         <Notes
           path="/notes/:id"
           notes={notes}
@@ -257,7 +256,6 @@ export default function Home() {
         onDelete={() => deleteNote(confirmDeleteIds?.[0], false)}
         onClose={() => setConfirmDeleteIds([])}
       />
-      {/*
       <MoveDownParents
         moveDownId={moveDownId}
         notes={notes}
@@ -266,7 +264,6 @@ export default function Home() {
         onClose={() => setMoveDownId(null)}
         onSelect={moveDownConfirm}
       />
-      */}
       { getIconSvgs(icons) }
     </>
   );
