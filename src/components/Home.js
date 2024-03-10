@@ -62,6 +62,8 @@ const defaultNotes = {
 
 export default function Home() {
   const rootName = 'root';
+  const [Notez, setNotez] = useLocalStorage('nNotes', defaultNotes);
+
   // const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [colors, setColors] = useLocalStorage('nColors', defaultColors);
@@ -99,7 +101,7 @@ export default function Home() {
   };
 
   const exportNotes = () => {
-    saveJsonFile(getSaveFilePath(), notes);
+    saveJsonFile(getSaveFilePath(), notez);
   };
 
   const goUp = () => {
