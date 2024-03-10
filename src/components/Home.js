@@ -62,14 +62,12 @@ const defaultNotes = {
 
 export default function Home() {
   const rootName = 'root';
-  /*
-  const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
+  // const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [colors, setColors] = useLocalStorage('nColors', defaultColors);
-  */
   const [notes, setNotes] = useState([]);
-  const [parentId, setParentId] = useState('');
-  const [colors, setColors] = useState([]);
+  // const [parentId, setParentId] = useState('');
+  // const [colors, setColors] = useState([]);
 
   const [message, setMessage] = useState('');
   const [topMenuShown, setTopMenuShown] = useState(false);
