@@ -82,8 +82,9 @@ export function addNotes(notes, addedNotes) {
 
 export function findChildIds(notes, id, childIds = []) {
   const note = notes[id];
+  const ids = note?.children?.map((childId) => findChildIds(notes, childId)) ?? [];
 
-  return childIds.concat(id, ...note.children.map((childId) => findChildIds(notes, childId)));
+  return childIds.concat(id, ...ids);
 }
 
 export function getLastAt(notes) {
