@@ -19,8 +19,8 @@ export default function Notes({
   openMenu,
   showTopMenu,
 }) {
-  const note = notes[id];
-  const children = note.children.map((id) => notes[id]);
+  const note = notes[id] ?? {};
+  const children = note.children?.map((id) => notes[id]) ?? [];
   const hasParent = Boolean(note.parentId);
   const contentRef = useRef();
   const [scrolls, setScrolls] = useLocalStorage('nScrolls', {});

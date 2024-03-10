@@ -200,6 +200,7 @@ export default function Home() {
           resetColors={resetColors}
           setColors={setColors}
         />
+        {/*
         <Edit
           path="/notes/:id/edit"
           colors={colors}
@@ -207,6 +208,7 @@ export default function Home() {
           parentId={parentId}
           saveNote={saveNote}
         />
+        */}
         <Notes
           path="/notes/:id"
           notes={notes}
@@ -255,6 +257,7 @@ export default function Home() {
         onDelete={() => deleteNote(confirmDeleteIds?.[0], false)}
         onClose={() => setConfirmDeleteIds([])}
       />
+      {/*
       <MoveDownParents
         moveDownId={moveDownId}
         notes={notes}
@@ -263,6 +266,7 @@ export default function Home() {
         onClose={() => setMoveDownId(null)}
         onSelect={moveDownConfirm}
       />
+      */}
       { getIconSvgs(icons) }
     </>
   );
