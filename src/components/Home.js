@@ -62,8 +62,7 @@ const defaultNotes = {
 
 export default function Home() {
   const rootName = 'root';
-  const [notez, setNotez] = useLocalStorage('nNotes', defaultNotes);
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useLocalStorage('nNotes', defaultNotes);
   const [parentId, setParentId] = useLocalStorage('nParentId', rootName);
   const [colors, setColors] = useLocalStorage('nColors', defaultColors);
   const [message, setMessage] = useState('');
@@ -117,10 +116,10 @@ export default function Home() {
       const count = Object.keys(parsed.notes).length;
 
       if (add) {
-        setNotez((last) => addNotes(last, parsed.notes));
+        setNotes((last) => addNotes(last, parsed.notes));
         setMessage(`Added ${count} notes`);
       } else {
-        setNotez(parsed.notes);
+        setNotes(parsed.notes);
         setMessage(`Imported ${count} notes`);
       }
     }
