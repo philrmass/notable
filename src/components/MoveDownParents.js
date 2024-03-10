@@ -14,7 +14,7 @@ export default function MoveDownParents({
 
   const renderNote = (id) => {
     const note = notes[id];
-    const style = { background: note.color };
+    const style = { background: note?.color };
 
     return (
       <button
@@ -23,7 +23,7 @@ export default function MoveDownParents({
         style={style}
         onClick={() => onSelect(id)}
       >
-        { note.text }
+        { note?.text }
       </button>
     );
   };

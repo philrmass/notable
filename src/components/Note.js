@@ -16,7 +16,7 @@ export default function Note({
   openMenu,
 }) {
   const type = 'Note';
-  const childCount = children.length;
+  const childCount = children?.length ?? 0;
   const showEdit = isParent || childCount === 0;
   const url = `/notes/${id}${showEdit ? '/edit' : ''}`;
 

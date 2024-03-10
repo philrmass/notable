@@ -71,12 +71,12 @@ export default function Notes({
         <div className={styles.notes}>
           { children.map((child) => (
             <div
-              key={child.id}
-              ref={child.id === scrollId && scrollIntoView}
+              key={child?.id}
+              ref={child?.id === scrollId && scrollIntoView}
               className="wrap"
             >
               <Note
-                key={child.id}
+                key={child?.id}
                 {...child}
                 deleteNote={deleteNote} 
                 moveNote={moveNote}
