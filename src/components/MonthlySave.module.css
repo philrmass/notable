@@ -1,7 +1,7 @@
 .message {
   margin-bottom: var(--gap2);
   color: var(--text-alt);
-  font-size: var(--font-size-sm0);
+  font-size: var(--font-size);
   white-space: pre-wrap;
 }
 

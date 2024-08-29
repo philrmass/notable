@@ -21,9 +21,10 @@
   margin: var(--gap2);
   border-radius: var(--radius1);
   background: var(--white);
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  font-size: var(--font-size-lg0);
 }
 
 .top {
@@ -42,8 +43,4 @@
   padding: 0;
   border: 0;
   margin: 0;
-}
-
-.children {
-  overflow-y: auto;
 }

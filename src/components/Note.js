@@ -47,18 +47,22 @@ export default function Note({
       className={noteClasses}
     >
       <div className="controls">
-        <button
-          className="icon-button"
-          onClick={() => openMenu(id)}
-        >
-          <Icon name="menu" className="icon" />
-        </button>
-        <button
-          className="icon-button"
-          onClick={() => deleteNote(id)}
-        >
-          <Icon name="cross" className="icon" />
-        </button>
+        { !isParent && (
+          <>
+            <button
+              className="icon-button"
+              onClick={() => openMenu(id)}
+            >
+              <Icon name="menu" className="icon" />
+            </button>
+            <button
+              className="icon-button"
+              onClick={() => deleteNote(id)}
+            >
+              <Icon name="cross" className="icon" />
+            </button>
+          </>
+        ) }
       </div>
       <div className="text">
         <Link key={id} href={url}>

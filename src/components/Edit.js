@@ -26,28 +26,27 @@ export default function Edit({
   saveNote,
 }) {
   const defaultColor = 'var(--note-default)';
+  const existing = notes[id];
   const [lastColor, setLastColor] = useLocalStorage('nLastColor', defaultColor);
-  const [note, setNote] = useState(notes[id]);
+  const [note, setNote] = useState(existing);
   const [toFirst, setToFirst] = useState();
   const [scrollId, setScrollId] = useState();
 
   useEffect(() => {
-    const existing = notes[id];
-
     if (existing) {
       setNote(existing);
     }
-  }, [notes, id]);
+  }, [existing]);
 
   useEffect(() => {
-    if (!notes[id] && !note) {
+    if (!existing && !note) {
       const parentColor = notes[parentId]?.color;
       const color = parentColor ?? lastColor;
 
       setNote(getDefaultNote(id, parentId, color));
       setScrollId(id);
     }
-  }, [notes, parentId, id, note, lastColor]);
+  }, [existing, notes, parentId, id, note, lastColor]);
 
   const handleColorChange = (color) => {
     setLastColor(color);
@@ -92,9 +91,11 @@ export default function Edit({
         className={styles.top}
         onClick={() => route('/colors')}
       />
-      <Link className={styles.link} href={`/notes/${id}`}>
-        Edit Children
-      </Link>
+      { existing && (
+        <Link className={styles.link} href={`/notes/${id}`}>
+          Edit Children
+        </Link>
+      ) }
       <div className={styles.colors}>
         <Colors
           colors={colors}

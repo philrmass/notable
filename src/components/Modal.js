@@ -22,7 +22,10 @@ export default function Modal({
       ref={dialogRef}
       className={styles.dialog}
     >
-      <div className={styles.wrap}>
+      <div
+        className={styles.wrap}
+        onClick={onClose}
+      >
         <div className={styles.content}>
           <div className={styles.top}>
             <button
@@ -32,9 +35,7 @@ export default function Modal({
               <Icon name="cross" className={styles.icon} />
             </button>
           </div>
-          <div className={styles.children}>
-            { children }
-          </div>
+          { children }
         </div>
       </div>
     </dialog>
