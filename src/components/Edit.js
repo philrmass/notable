@@ -28,9 +28,18 @@ export default function Edit({
   const defaultColor = 'var(--note-default)';
   const existing = notes[id];
   const [lastColor, setLastColor] = useLocalStorage('nLastColor', defaultColor);
+  const [lastToFirst, setLastToFirst] = useLocalStorage('nLastToFirst', null);
   const [note, setNote] = useState(existing);
-  const [toFirst, setToFirst] = useState();
+  const [toFirst, setToFirst] = useState(null);
   const [scrollId, setScrollId] = useState();
+  const hasToFirst = typeof toFirst === 'boolean';
+  const showFirst = toFirst || !hasToFirst;
+
+  useEffect(() => {
+    if (!existing) {
+      setToFirst(lastToFirst);
+    }
+  }, [id, existing, lastToFirst]);
 
   useEffect(() => {
     if (existing) {
@@ -57,13 +66,23 @@ export default function Edit({
     setNote((note) => ({ ...note, text }));
   };
 
+  const handleToFirstChange = () => {
+    if (hasToFirst) {
+      const value = !toFirst;
+      setToFirst(value);
+      setLastToFirst(value);
+    } else {
+      setToFirst(showFirst);
+      setLastToFirst(showFirst);
+    }
+  };
+
   const close = () => {
     setNote(null);
     route(`/notes/${parentId}`);
   };
 
   const handleSave = () => {
-    const hasToFirst = typeof toFirst === 'boolean';
     const sid = scrollId ?? (hasToFirst && note.id);
 
     setNote(null);
@@ -76,14 +95,12 @@ export default function Edit({
   const isComplete = Boolean(text);
   const noteStyles = { background: color };
   const textClasses = classnames('text', styles.text);
-  const upClasses = classnames(
+  const buttonClasses = classnames(
+    styles.large,
     'icon-button', 
-    { 'button-highlighted': toFirst === true },
+    { [styles.unset]: !hasToFirst },
   );
-  const downClasses = classnames(
-    'icon-button', 
-    { 'button-highlighted': toFirst === false },
-  );
+  const iconName = showFirst ? 'caretUp' : 'caretDown';
 
   return (
     <div className={styles.main}>
@@ -104,18 +121,12 @@ export default function Edit({
         />
       </div>
       <div style={noteStyles} className="note">
-        <div className="controls">
+        <div className={`controls ${styles.controls}`}>
           <button
-            className={upClasses}
-            onClick={() => setToFirst(true)}
+            className={buttonClasses}
+            onClick={handleToFirstChange}
           >
-            <Icon name="caretUp" className="icon" />
-          </button>
-          <button
-            className={downClasses}
-            onClick={() => setToFirst(false)}
-          >
-            <Icon name="caretDown" className="icon" />
+            <Icon name={iconName} className="icon" />
           </button>
         </div>
         <textarea

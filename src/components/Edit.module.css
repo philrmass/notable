@@ -24,6 +24,15 @@
   margin: var(--gap2) 0;
 }
 
+.large {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+}
+
+.unset {
+  color: var(--grey3);
+}
+
 .text {
   flex-shrink: 0;
   border: 0;
